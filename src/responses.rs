@@ -27,4 +27,26 @@ pub struct GetInfo {
     pub errors: String
 }
 
-pub type SetLogLevel = String;
+/// "getmemoryinfo" command
+#[derive(Debug, Clone, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetMemoryInfo {
+    pub total: u32,
+    pub js_heap: u32,
+    pub js_heap_total: u32,
+    pub native_heap: u32,
+    pub external: u32
+}
+
+/// "validateaddress" command
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct ValidateAddress {
+     #[serde(rename = "isvalid")]
+     pub is_valid: bool,
+    // TODO transition to hash type
+     pub address: String,
+     #[serde(rename = "ismine")]
+     pub is_mine: bool,
+    #[serde(rename = "iswatchonly")]
+    pub is_watch_only: bool
+}

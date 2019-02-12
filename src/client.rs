@@ -28,6 +28,7 @@ impl HSClient {
         input: T,
     ) -> Result<U, Error> {
         let params = serde_json::to_value(input)?;
+
         let arg = params.as_object().unwrap().iter().map(|(_, param)| param.clone()).collect::<Vec<_>>();
 
         let request = self.client.build_request(method, &arg);
@@ -43,10 +44,21 @@ impl HSClient {
         self.call("getinfo", requests::GetInfo {})
     }
 
+    pub fn getmemoryinfo(&mut self) -> Result<responses::GetMemoryInfo, Error> {
+        self.call("getmemoryinfo", requests::GetMemoryInfo {})
+    }
+
     /// Set the log level on the node.
     pub fn setloglevel(&mut self, level: String) -> Result<(), Error> {
         self.call("setloglevel", requests::SetLogLevel { level })
     }
+
+    /// validate an address
+    pub fn validateaddress(&mut self, address: String) -> Result<responses::ValidateAddress, Error> {
+        self.call("validateaddress", requests::ValidateAddress { address })
+    }
+
+
 
 
 }
