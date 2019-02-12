@@ -6,7 +6,7 @@ use serde::Serialize;
 use serde_json;
 
 mod node;
-
+mod mining;
 
 pub struct HSClient {
     client: Client

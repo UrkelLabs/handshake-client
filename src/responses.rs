@@ -24,7 +24,7 @@ pub struct GetInfo {
     pub pay_tx_fee: f64,
     #[serde(rename = "relayfee")]
     pub relay_fee: f64,
-    pub errors: String
+    pub errors: String,
 }
 
 /// "getmemoryinfo" command
@@ -35,19 +35,55 @@ pub struct GetMemoryInfo {
     pub js_heap: u32,
     pub js_heap_total: u32,
     pub native_heap: u32,
-    pub external: u32
+    pub external: u32,
 }
 
 /// "validateaddress" command
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct ValidateAddress {
-     #[serde(rename = "isvalid")]
-     pub is_valid: bool,
+    #[serde(rename = "isvalid")]
+    pub is_valid: bool,
     // TODO transition to hash type
-     pub address: Option<String>,
-     #[serde(rename = "ismine")]
-     pub is_mine: Option<bool>,
+    pub address: Option<String>,
+    #[serde(rename = "ismine")]
+    pub is_mine: Option<bool>,
     #[serde(rename = "iswatchonly")]
-    pub is_watch_only: Option<bool>
+    pub is_watch_only: Option<bool>,
 }
 
+// --- Mining Responses --- //
+/// "getnetworkhashps" command
+pub type GetNetworkHashps = f32;
+
+/// "getmininginfo" command
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct GetMiningInfo {
+    pub blocks: u32,
+    #[serde(rename = "currentblocksize")]
+    pub current_block_size: u32,
+    #[serde(rename = "currentblockweight")]
+    pub current_block_weight: u32,
+    #[serde(rename = "currentblocktx")]
+    pub currrent_block_tx: u32,
+    pub difficulty: f32,
+    pub errors: String,
+    #[serde(rename = "genproclimit")]
+    pub genproc_limit: u32,
+    #[serde(rename = "networkhashps")]
+    pub network_hashps: f32,
+    #[serde(rename = "pooledtx")]
+    pub pooled_tx: u32,
+    pub testnet: bool,
+    pub chain: String,
+    pub generate: bool,
+}
+
+/// "getwork" command
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct GetWork {
+    pub network: String,
+    pub data: String,
+    pub target: String,
+    pub height: u32,
+    pub time: u32
+}
