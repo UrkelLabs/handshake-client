@@ -6,6 +6,7 @@ use serde_json;
 
 mod node;
 mod chain;
+mod block;
 mod mining;
 
 pub struct HSClient {
