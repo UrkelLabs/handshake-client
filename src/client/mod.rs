@@ -2,7 +2,6 @@ use jsonrpc::client::Client;
 use jsonrpc::Error;
 
 use serde::de::DeserializeOwned;
-use serde::Serialize;
 use serde_json;
 
 mod node;
@@ -21,16 +20,21 @@ impl HSClient {
     }
 
     /// Generic call function for RPC calls.
-    fn call<T: Serialize, U: DeserializeOwned>(
+    fn call<U: DeserializeOwned>(
         &mut self,
         method: &str,
-        input: T,
+        // input: T,
+        args: &[serde_json::Value]
     ) -> Result<U, Error> {
-        let params = serde_json::to_value(input)?;
+        // let params = serde_json::to_value(input)?;
 
-        let arg = params.as_object().unwrap().iter().map(|(_, param)| param.clone()).collect::<Vec<_>>();
+        // dbg!(&params);
 
-        let request = self.client.build_request(method, &arg);
+        // let arg = params.as_object().unwrap().iter().map(|(_, param)| param.clone()).collect::<Vec<_>>();
+
+        // dbg!(&arg);
+
+        let request = self.client.build_request(method, args);
 
         self.client
             .send_request(&request)

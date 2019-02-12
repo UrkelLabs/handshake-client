@@ -51,6 +51,24 @@ pub struct ValidateAddress {
     pub is_watch_only: Option<bool>,
 }
 
+/// 'stop' command
+pub type Stop = String;
+
+/// "createmultisig" command
+#[derive(Debug, Clone, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CreateMultiSig {
+    pub address: String,
+    pub redeem_script: String
+}
+
+/// "signmessagewithprivkey" command
+pub type SignMessageWithPrivKey = String;
+
+/// "verifymessage" command
+pub type VerifyMessage = bool;
+
+
 // --- Mining Responses --- //
 /// "getnetworkhashps" command
 pub type GetNetworkHashps = f32;
