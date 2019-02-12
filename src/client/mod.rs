@@ -6,6 +6,7 @@ use serde_json;
 
 mod node;
 mod chain;
+mod mempool;
 mod block;
 mod mining;
 

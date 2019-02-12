@@ -1,5 +1,7 @@
 use serde_derive::{Deserialize, Serialize};
 
+use std::collections::HashMap;
+
 /// "getinfo" command
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct GetInfo {
@@ -181,7 +183,88 @@ pub type GetChainTips = Vec<ChainTip>;
 pub type GetDifficulty = f64;
 
 
+// --- Mempool Responses --- //
 
+/// "getmempoolinfo"
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct GetMempoolInfo{
+    pub size: u32,
+    pub bytes: u64,
+    pub usage: u64,
+    pub maxmempool: u64,
+    #[serde(rename = "mempoolminfee")]
+    pub mempool_min_fee: f64
+}
+
+/// "getmempoolancestors" verbose = 0
+pub type GetMempoolAncestors = Vec<String>;
+
+/// "getmempoolentry" 
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct MempoolEntry {
+    pub size: u32,
+    pub fee: f64,
+    #[serde(rename = "modifiedfee")]
+    pub modified_fee: f64,
+    pub time: u64,
+    pub height: u32,
+    //Double check if these should be floats XXX
+    #[serde(rename = "startingpriority")]
+    pub starting_priority: f64,
+    #[serde(rename = "currentpriority")]
+    pub current_priority: f64,
+    #[serde(rename = "descendantcount")]
+    pub descendant_count: u32,
+    #[serde(rename = "descendantsize")]
+    pub descendant_size: u32,
+    #[serde(rename = "descendantfees")]
+    pub descendant_fees: f64,
+    #[serde(rename = "ancestorcount")]
+    pub ancestor_count: u32,
+    #[serde(rename = "ancestorsize")]
+    pub ancestor_size: u32,
+    #[serde(rename = "ancestorfees")]
+    pub ancestor_fees: f64,
+    pub depends: Vec<String>,
+}
+
+/// "getrawmempool"
+pub type GetRawMempool = Vec<String>;
+
+/// "getrawmempool"
+pub type GetRawMempoolVerbose = HashMap<String, MempoolEntry>;
+
+/// "getmempoolancestors" verbose = 1
+pub type GetMempoolAncestorsVerbose = Vec<MempoolEntry>;
+
+/// "getmempooldescendants" verbose = 0
+pub type GetMempoolDescendants = Vec<String>;
+
+/// "getmempooldescendants" verbose = 1
+pub type GetMempoolDescendentsVerbose = Vec<MempoolEntry>;
+
+/// "prioritisetransaction"
+pub type PrioritiseTransaction = bool;
+
+/// "estimatefee"
+pub type EstimateFee = f64;
+
+/// "estimatepriority"
+pub type EstimatePriority = f64;
+
+/// "estimatesmartfee"
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct EstimateSmartFee {
+    pub fee: f64,
+    pub blocks: u32
+}
+
+/// "estimatesmartpriority
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct EstimateSmartPriority {
+    pub priority: f64,
+    pub blocks: u32
+}
 
 
 // --- Mining Responses --- //
