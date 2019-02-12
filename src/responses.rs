@@ -44,9 +44,10 @@ pub struct ValidateAddress {
      #[serde(rename = "isvalid")]
      pub is_valid: bool,
     // TODO transition to hash type
-     pub address: String,
+     pub address: Option<String>,
      #[serde(rename = "ismine")]
-     pub is_mine: bool,
+     pub is_mine: Option<bool>,
     #[serde(rename = "iswatchonly")]
-    pub is_watch_only: bool
+    pub is_watch_only: Option<bool>
 }
+

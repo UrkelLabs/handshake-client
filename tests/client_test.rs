@@ -34,14 +34,28 @@ fn test_getmemoryinfo() {
 }
 
 #[test]
-fn test_validateaddress() {
+fn test_validateaddress_ok() {
     let mut client = common::setup();
 
-    let validateaddress = client.validateaddress(" 
-ts1qq79hzunlkj50fvm7rxg3xetx4kml4e0am43htk".to_string());
-
-    dbg!(&validateaddress);
+    let validateaddress = client.validateaddress("ts1qq79hzunlkj50fvm7rxg3xetx4kml4e0am43htk".to_string());
 
     assert!(validateaddress.is_ok());
+
+    let address = validateaddress.unwrap();
+
+    assert!(address.is_valid);
+}
+
+#[test]
+fn test_validateaddress_fail() {
+    let mut client = common::setup();
+
+    let validateaddress = client.validateaddress("notanaddress".to_string());
+
+    assert!(validateaddress.is_ok());
+
+    let address = validateaddress.unwrap();
+
+    assert!(!address.is_valid);
 
 }
