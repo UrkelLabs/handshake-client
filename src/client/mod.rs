@@ -5,6 +5,7 @@ use serde::de::DeserializeOwned;
 use serde_json;
 
 mod node;
+mod chain;
 mod mining;
 
 pub struct HSClient {
