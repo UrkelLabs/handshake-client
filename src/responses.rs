@@ -303,3 +303,94 @@ pub struct GetWork {
     pub height: u32,
     pub time: u32
 }
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct Address {
+    pub version: u32,
+    pub hash: String
+}
+
+/// "gettxout"
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct GetTxOut {
+    pub bestblock: String,
+    pub confirmations: u32,
+    pub value: u64,
+    pub address: Address,
+    pub version: u32,
+    pub coinbase: bool
+}
+
+/// "gettxoutsetinfo"
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct GetTxOutSetInfo {
+    pub height: u32,
+    pub bestblock: String,
+    pub transactions: u32,
+    pub txouts: u32,
+    pub bytes_serialized: u32,
+    pub hash_serialized: u32,
+    pub total_amount: f64,
+    pub total_burned: f64
+}
+
+
+/// "getrawtransaction" verbose = false
+pub type GetRawTransaction = String;
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct Vin {
+    pub coinbase: bool,
+    pub txid: String,
+    pub vout: u64,
+    pub txinwitness: Vec<String>,
+    pub sequence: u64
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct Covenant {
+    #[serde(rename = "type")]
+    type_: u32,
+    //TODO make this generic -> I think this will break on specific covenants.
+    items: Vec<String>
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct Vout {
+    pub value: u64,
+    pub n: u32,
+    pub address: Address,
+    pub covenant: Covenant
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct RawTransaction {
+    pub txid: String,
+    pub hash: String,
+    pub size: u32,
+    pub vsize: u32,
+    pub version: u32,
+    pub locktime: u64,
+    pub vin: Vec<Vin>,
+    pub vout: Vec<Vout>,
+    pub blockhash: Option<String>,
+    pub confirmations: u32,
+    pub time: u64,
+    pub blocktime: u64
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct DecodeScript {
+    pub asm: String,
+    #[serde(rename = "type")]
+    pub type_: String,
+    #[serde(rename = "reqSigs")]
+    pub req_sigs: u32,
+    pub p2sh: String,
+}
+
+pub type SendRawTransaction = String;
+
+pub type GetTxOutProof = String;
+
+pub type VerifyTxOutProof = Vec<String>;
