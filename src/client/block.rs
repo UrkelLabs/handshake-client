@@ -20,11 +20,11 @@ impl HSClient {
         self.call("getblockcount", &[])
     }
 
-    pub fn getblock(&self, blockhash: String, verbose: bool, details: bool) -> Result<responses::GetBlock, Error> {
+    pub fn getblock(&self, blockhash: &str, verbose: bool, details: bool) -> Result<responses::GetBlock, Error> {
         self.call("getblock", &[json!(blockhash), json!(verbose), json!(details)])
     }
 
-    pub fn getblockbyheight(&self, blockheight: u32, verbose: bool, details: bool) -> Result<responses::GetBlock, Error> {
+    pub fn getblockbyheight(&self, blockheight: &u32, verbose: bool, details: bool) -> Result<responses::GetBlock, Error> {
         self.call("getblockbyheight", &[json!(blockheight), json!(verbose), json!(details)])
     }
 
@@ -33,7 +33,7 @@ impl HSClient {
     //     self.call("getblockhash", &[json!(blockheight)])
     // }
 
-    pub fn getblockheader(&self, blockhash: String, verbose: bool) -> Result<responses::GetBlockHeader, Error> {
+    pub fn getblockheader(&self, blockhash: &str, verbose: bool) -> Result<responses::GetBlockHeader, Error> {
         self.call("getblockheader", &[json!(blockhash), json!(verbose)])
     }
 

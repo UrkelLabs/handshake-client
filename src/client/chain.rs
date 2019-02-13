@@ -10,11 +10,11 @@ impl HSClient {
         self.call("pruneblockchain", &[])
     }
 
-    pub fn invalidateblock(&self, blockhash: String) -> Result<(), Error> {
+    pub fn invalidateblock(&self, blockhash: &str) -> Result<(), Error> {
         self.call("invalidateblock", &[json!(blockhash)])
     }
 
-    pub fn reconsiderblock(&self, blockhash: String) -> Result<(), Error> {
+    pub fn reconsiderblock(&self, blockhash: &str) -> Result<(), Error> {
         self.call("reconsiderblock", &[json!(blockhash)])
     }
 

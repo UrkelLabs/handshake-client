@@ -12,23 +12,23 @@ impl HSClient {
         self.call("getmempoolinfo", &[])
     }
 
-    pub fn getmempoolancestors(&self, txhash: String) -> Result<responses::GetMempoolAncestors, Error> {
+    pub fn getmempoolancestors(&self, txhash: &str) -> Result<responses::GetMempoolAncestors, Error> {
         self.call("getmempoolancestors", &[json!(txhash), json!(false)])
     }
 
-    pub fn getmempoolancestorsverbose(&self, txhash: String) -> Result<responses::GetMempoolAncestorsVerbose, Error> {
+    pub fn getmempoolancestorsverbose(&self, txhash: &str) -> Result<responses::GetMempoolAncestorsVerbose, Error> {
         self.call("getmempoolancestors", &[json!(txhash), json!(true)])
     }
 
-    pub fn getmempooldescendants(&self, txhash: String) -> Result<responses::GetMempoolDescendants, Error> {
+    pub fn getmempooldescendants(&self, txhash: &str) -> Result<responses::GetMempoolDescendants, Error> {
         self.call("getmempooldescendants", &[json!(txhash), json!(false)])
     }
 
-    pub fn getmempooldescendantsverbose(&self, txhash: String) -> Result<responses::GetMempoolDescendants, Error> {
+    pub fn getmempooldescendantsverbose(&self, txhash: &str) -> Result<responses::GetMempoolDescendants, Error> {
         self.call("getmempooldescendants", &[json!(txhash), json!(true)])
     }
 
-    pub fn getmempoolentry(&self, txhash: String) -> Result<responses::MempoolEntry, Error> {
+    pub fn getmempoolentry(&self, txhash: &str) -> Result<responses::MempoolEntry, Error> {
         self.call("getmempoolentry", &[json!(txhash)])
     }
 
@@ -40,23 +40,23 @@ impl HSClient {
         self.call("getrawmempool", &[json!(true)])
     }
 
-    pub fn prioritisetransaction(&self, txhash: String, priority_delta: u32, fee_delta: u32) -> Result<responses::PrioritiseTransaction, Error> {
+    pub fn prioritisetransaction(&self, txhash: &str, priority_delta: u32, fee_delta: u32) -> Result<responses::PrioritiseTransaction, Error> {
         self.call("prioritisetransaction", &[json!(txhash), json!(priority_delta), json!(fee_delta)])
     }
 
-    pub fn estimatefee(&self, nblocks: u32) -> Result<responses::EstimateFee, Error> {
+    pub fn estimatefee(&self, nblocks: &u32) -> Result<responses::EstimateFee, Error> {
         self.call("estimatefee", &[json!(nblocks)])
     }
 
-    pub fn estimatepriority(&self, nblocks: u32) -> Result<responses::EstimatePriority, Error> {
+    pub fn estimatepriority(&self, nblocks: &u32) -> Result<responses::EstimatePriority, Error> {
         self.call("estimatepriority", &[json!(nblocks)])
     }
 
-    pub fn estimatesmartfee(&self, nblocks: u32) -> Result<responses::EstimateSmartFee, Error> {
+    pub fn estimatesmartfee(&self, nblocks: &u32) -> Result<responses::EstimateSmartFee, Error> {
         self.call("estimatesmartfee", &[json!(nblocks)])
     }
 
-    pub fn estimatesmartpriority(&self, nblocks: u32) -> Result<responses::EstimateSmartPriority, Error> {
+    pub fn estimatesmartpriority(&self, nblocks: &u32) -> Result<responses::EstimateSmartPriority, Error> {
         self.call("estimatesmartpriority", &[json!(nblocks)])
     }
     
