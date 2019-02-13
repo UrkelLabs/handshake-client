@@ -4,12 +4,13 @@ use jsonrpc::Error;
 use serde::de::DeserializeOwned;
 use serde_json;
 
-mod node;
+mod block;
 mod chain;
 mod mempool;
-mod tx;
-mod block;
 mod mining;
+mod network;
+mod node;
+mod tx;
 
 pub struct HSClient {
     client: Client
