@@ -25,7 +25,7 @@ impl HSClient {
 
     /// Generic call function for RPC calls.
     fn call<U: DeserializeOwned>(
-        &mut self,
+        &self,
         method: &str,
         // input: T,
         args: &[serde_json::Value]
