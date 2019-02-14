@@ -548,3 +548,88 @@ pub struct BannedNode {
     pub ban_reason: String
 }
 
+
+// --- Naming Responses --- //
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct CreateClaim {
+    pub name: String,
+    pub target: String,
+    pub value: u64,
+    pub size: u64,
+    pub fee: u64,
+    pub address: String,
+    pub txt: String,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct NameProof {
+    pub hash: String,
+    pub height: u32,
+    pub root: String,
+    pub name: String,
+    pub key: String,
+    pub proof: Proof,
+
+}
+
+//TODO needs to actually be an enum -> See: https://handshake-org.github.io/api-docs/#getnameproof
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct Proof {
+    #[serde(rename="type")]
+    pub type_: String,
+    pub depth: u32,
+    pub nodes: Vec<Vec<String>>,
+    pub value: String
+}
+
+//TODO no idea if this works -> Please test
+pub type NameResource = HashMap<String, String>;
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+#[serde(rename_all="camelCase")]
+pub struct Name {
+    pub name: String,
+    pub name_hash: String,
+    pub state: String,
+    pub height: u32,
+    pub renewal: u32,
+    pub owner: NameOwner,
+    pub value: u64,
+    pub highest: u64,
+    pub data: String,
+    pub transfer: u32,
+    pub revoked: u32, 
+    pub claimed: bool,
+    pub weak: bool,
+    pub stats: NameStats
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct NameOwner {
+    pub hash: String,
+    pub index: u64,
+}
+
+//TODO make this an Enum for all posibilities
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct NameStats {
+    renewal_period_start: u32,
+    renewal_period_end: u32,
+    blocks_until_expire: u32,
+    days_until_expire: f64
+}
+
+//TODO check output types
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct NameInfo {
+    pub start: NameStart,
+    pub info: Name
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct NameStart {
+    pub reserved: bool,
+    pub week: u32,
+    pub start: u32
+}
