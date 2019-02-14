@@ -304,6 +304,47 @@ pub struct GetWork {
     pub time: u32
 }
 
+//TODO needs some serious help with types and naming
+/// "getblocktemplate" command
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct BlockTemplate{
+    pub capabilities: Vec<String>,
+    pub mutable: Vec<String>,
+    pub version: u32,
+    pub rules: Vec<String>,
+    //Not going to work
+    pub vb_available: String,
+    pub vb_required: u32,
+    pub height: u32,
+    pub previous_blockhash: String,
+    pub tree_root: String,
+    pub filter_root: String,
+    pub reserved_root: String,
+    pub target: String,
+    pub bits: String,
+    pub nonce_range: String,
+    pub cur_time: u64,
+    pub min_time: u64,
+    pub max_time: u64,
+    pub expires: u64,
+    pub sig_op_limit: u64,
+    pub size_limit: u64,
+    pub weight_limit: u64,
+    pub long_poll_id: String,
+    pub submit_old: bool,
+    pub coinbase_aux: CoinbaseAux,
+    pub coinbase_value: u64,
+    pub claims: Vec<String>,
+    pub airdrops: Vec<String>,
+    pub transactions: Vec<String>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct CoinbaseAux {
+    pub flags: String
+}
+
+
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Address {
     pub version: u32,
