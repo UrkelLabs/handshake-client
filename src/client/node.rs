@@ -10,21 +10,21 @@ use serde_json::json;
 
 impl HSClient {
     /// Show information about this node.
-    pub fn getinfo(&self) -> Result<responses::GetInfo, Error> {
+    pub fn get_info(&self) -> Result<responses::GetInfo, Error> {
         self.call("getinfo", &[])
     }
 
-    pub fn getmemoryinfo(&self) -> Result<responses::GetMemoryInfo, Error> {
+    pub fn get_memory_info(&self) -> Result<responses::GetMemoryInfo, Error> {
         self.call("getmemoryinfo", &[])
     }
 
     /// Set the log level on the node.
-    pub fn setloglevel(&self, level: &str) -> Result<(), Error> {
+    pub fn set_log_level(&self, level: &str) -> Result<(), Error> {
         self.call("setloglevel", &[json!(level)])
     }
 
     /// validate an address
-    pub fn validateaddress(&self, address: &str) -> Result<responses::ValidateAddress, Error> {
+    pub fn validate_address(&self, address: &str) -> Result<responses::ValidateAddress, Error> {
         self.call("validateaddress", &[json!(address)] )
     }
 
@@ -32,19 +32,19 @@ impl HSClient {
         self.call("stop", &[])
     }
 
-    pub fn createmultisig(&self, nrequired: &u32, keys: &Vec<String>) -> Result<responses::CreateMultiSig, Error> {
+    pub fn create_multisig(&self, nrequired: &u32, keys: &Vec<String>) -> Result<responses::CreateMultiSig, Error> {
         self.call("createmultisig", &[json!(nrequired), json!(keys)])
     }
 
-    pub fn signmessagewithprivkey(&self, privkey: &str, message: &str) -> Result<responses::SignMessageWithPrivKey, Error> {
+    pub fn sign_message_with_priv_key(&self, privkey: &str, message: &str) -> Result<responses::SignMessageWithPrivKey, Error> {
         self.call("signmessagewithprivkey", &[json!(privkey), json!(message)])
     }
 
-    pub fn verifymessage(&self, address: &str, signature: &str, message: &str) -> Result<responses::VerifyMessage, Error> {
+    pub fn verify_message(&self, address: &str, signature: &str, message: &str) -> Result<responses::VerifyMessage, Error> {
         self.call("verifymessage", &[json!(address), json!(signature), json!(message)])
     }
 
-    pub fn setmocktime(&self, time: &u64) -> Result<(), Error> {
+    pub fn set_mock_time(&self, time: &u64) -> Result<(), Error> {
         self.call("setmocktime", &[json!(time)])
     }
 

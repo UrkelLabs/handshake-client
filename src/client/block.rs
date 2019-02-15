@@ -8,23 +8,23 @@ use serde_json;
 use serde_json::json;
 
 impl HSClient {
-    pub fn getblockchaininfo(&self) -> Result<responses::GetBlockchainInfo, Error> {
+    pub fn get_blockchain_info(&self) -> Result<responses::GetBlockchainInfo, Error> {
         self.call("getblockchaininfo", &[])
     }
 
-    pub fn getbestblockhash(&self) -> Result<responses::GetBestBlockHash, Error> {
+    pub fn get_best_blockhash(&self) -> Result<responses::GetBestBlockHash, Error> {
         self.call("getbestblockhash", &[])
     }
 
-    pub fn getblockcount(&self) -> Result<responses::GetBlockCount, Error> {
+    pub fn get_block_count(&self) -> Result<responses::GetBlockCount, Error> {
         self.call("getblockcount", &[])
     }
 
-    pub fn getblock(&self, blockhash: &str, verbose: bool, details: bool) -> Result<responses::GetBlock, Error> {
+    pub fn get_block(&self, blockhash: &str, verbose: bool, details: bool) -> Result<responses::GetBlock, Error> {
         self.call("getblock", &[json!(blockhash), json!(verbose), json!(details)])
     }
 
-    pub fn getblockbyheight(&self, blockheight: &u32, verbose: bool, details: bool) -> Result<responses::GetBlock, Error> {
+    pub fn get_block_by_height(&self, blockheight: &u32, verbose: bool, details: bool) -> Result<responses::GetBlock, Error> {
         self.call("getblockbyheight", &[json!(blockheight), json!(verbose), json!(details)])
     }
 
@@ -33,15 +33,15 @@ impl HSClient {
     //     self.call("getblockhash", &[json!(blockheight)])
     // }
 
-    pub fn getblockheader(&self, blockhash: &str, verbose: bool) -> Result<responses::GetBlockHeader, Error> {
+    pub fn get_block_header(&self, blockhash: &str, verbose: bool) -> Result<responses::GetBlockHeader, Error> {
         self.call("getblockheader", &[json!(blockhash), json!(verbose)])
     }
 
-    pub fn getchaintips(&self) -> Result<responses::GetChainTips, Error> {
+    pub fn get_chain_tips(&self) -> Result<responses::GetChainTips, Error> {
         self.call("getchaintips", &[])
     }
 
-    pub fn getdifficulty(&self) -> Result<responses::GetDifficulty, Error> {
+    pub fn get_difficulty(&self) -> Result<responses::GetDifficulty, Error> {
         self.call("getdifficulty", &[])
     }
 }

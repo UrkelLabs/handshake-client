@@ -8,55 +8,55 @@ use serde_json;
 use serde_json::json;
 
 impl HSClient {
-    pub fn getmempoolinfo(&self) -> Result<responses::GetMempoolInfo, Error> {
+    pub fn get_mempool_info(&self) -> Result<responses::GetMempoolInfo, Error> {
         self.call("getmempoolinfo", &[])
     }
 
-    pub fn getmempoolancestors(&self, txhash: &str) -> Result<responses::GetMempoolAncestors, Error> {
+    pub fn get_mempool_ancestors(&self, txhash: &str) -> Result<responses::GetMempoolAncestors, Error> {
         self.call("getmempoolancestors", &[json!(txhash), json!(false)])
     }
 
-    pub fn getmempoolancestorsverbose(&self, txhash: &str) -> Result<responses::GetMempoolAncestorsVerbose, Error> {
+    pub fn get_mempool_ancestors_verbose(&self, txhash: &str) -> Result<responses::GetMempoolAncestorsVerbose, Error> {
         self.call("getmempoolancestors", &[json!(txhash), json!(true)])
     }
 
-    pub fn getmempooldescendants(&self, txhash: &str) -> Result<responses::GetMempoolDescendants, Error> {
+    pub fn get_mempool_descendants(&self, txhash: &str) -> Result<responses::GetMempoolDescendants, Error> {
         self.call("getmempooldescendants", &[json!(txhash), json!(false)])
     }
 
-    pub fn getmempooldescendantsverbose(&self, txhash: &str) -> Result<responses::GetMempoolDescendants, Error> {
+    pub fn get_mempool_descendants_verbose(&self, txhash: &str) -> Result<responses::GetMempoolDescendants, Error> {
         self.call("getmempooldescendants", &[json!(txhash), json!(true)])
     }
 
-    pub fn getmempoolentry(&self, txhash: &str) -> Result<responses::MempoolEntry, Error> {
+    pub fn get_mempool_entry(&self, txhash: &str) -> Result<responses::MempoolEntry, Error> {
         self.call("getmempoolentry", &[json!(txhash)])
     }
 
-    pub fn getrawmempool(&self) -> Result<responses::GetRawMempool, Error> {
+    pub fn get_raw_mempool(&self) -> Result<responses::GetRawMempool, Error> {
         self.call("getrawmempool", &[json!(false)])
     }
 
-    pub fn getrawmempoolverbose(&self) -> Result<responses::GetRawMempoolVerbose, Error> {
+    pub fn get_raw_mempool_verbose(&self) -> Result<responses::GetRawMempoolVerbose, Error> {
         self.call("getrawmempool", &[json!(true)])
     }
 
-    pub fn prioritisetransaction(&self, txhash: &str, priority_delta: u32, fee_delta: u32) -> Result<responses::PrioritiseTransaction, Error> {
+    pub fn prioritise_transaction(&self, txhash: &str, priority_delta: u32, fee_delta: u32) -> Result<responses::PrioritiseTransaction, Error> {
         self.call("prioritisetransaction", &[json!(txhash), json!(priority_delta), json!(fee_delta)])
     }
 
-    pub fn estimatefee(&self, nblocks: &u32) -> Result<responses::EstimateFee, Error> {
+    pub fn estimate_fee(&self, nblocks: &u32) -> Result<responses::EstimateFee, Error> {
         self.call("estimatefee", &[json!(nblocks)])
     }
 
-    pub fn estimatepriority(&self, nblocks: &u32) -> Result<responses::EstimatePriority, Error> {
+    pub fn estimate_priority(&self, nblocks: &u32) -> Result<responses::EstimatePriority, Error> {
         self.call("estimatepriority", &[json!(nblocks)])
     }
 
-    pub fn estimatesmartfee(&self, nblocks: &u32) -> Result<responses::EstimateSmartFee, Error> {
+    pub fn estimate_smart_fee(&self, nblocks: &u32) -> Result<responses::EstimateSmartFee, Error> {
         self.call("estimatesmartfee", &[json!(nblocks)])
     }
 
-    pub fn estimatesmartpriority(&self, nblocks: &u32) -> Result<responses::EstimateSmartPriority, Error> {
+    pub fn estimate_smart_priority(&self, nblocks: &u32) -> Result<responses::EstimateSmartPriority, Error> {
         self.call("estimatesmartpriority", &[json!(nblocks)])
     }
     
