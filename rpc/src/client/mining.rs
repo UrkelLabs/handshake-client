@@ -2,18 +2,19 @@ use crate::responses;
 
 use jsonrpc::error::Error;
 
-use crate::client::HSClient;
+use crate::client::RPCClient;
 
 use serde_json::json;
 
-impl HSClient {
+impl RPCClient {
     // TODO The return type here is accurate, but hasn't been given a struct
     /// Get network hash per second
-    pub fn get_network_hashps(&self, blocks: &u32, height: &u32) -> Result<responses::GetNetworkHashps, Error> {
-        self.call(
-            "getnetworkhashps",
-            &[json!(blocks), json!(height)]
-        )
+    pub fn get_network_hashps(
+        &self,
+        blocks: &u32,
+        height: &u32,
+    ) -> Result<responses::GetNetworkHashps, Error> {
+        self.call("getnetworkhashps", &[json!(blocks), json!(height)])
     }
 
     pub fn get_mining_info(&self) -> Result<responses::GetMiningInfo, Error> {
@@ -29,7 +30,10 @@ impl HSClient {
     //     self.call("getworklp", &[])
     // }
 
-    pub fn get_block_template(&self, json_request_object: &serde_json::Value) -> Result<responses::BlockTemplate, Error> {
+    pub fn get_block_template(
+        &self,
+        json_request_object: &serde_json::Value,
+    ) -> Result<responses::BlockTemplate, Error> {
         self.call("getblocktemplate", &[json!(json_request_object)])
     }
 
@@ -57,7 +61,11 @@ impl HSClient {
         self.call("generate", &[json!(num_blocks)])
     }
 
-    pub fn generate_to_address(&self, num_blocks: &u32, address: &str) -> Result<Vec<String>, Error> {
+    pub fn generate_to_address(
+        &self,
+        num_blocks: &u32,
+        address: &str,
+    ) -> Result<Vec<String>, Error> {
         self.call("generatetoaddress", &[json!(num_blocks), json!(address)])
     }
 }

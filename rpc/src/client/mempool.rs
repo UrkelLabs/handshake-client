@@ -2,29 +2,41 @@ use crate::responses;
 
 use jsonrpc::error::Error;
 
-use crate::client::HSClient;
+use crate::client::RPCClient;
 
 use serde_json;
 use serde_json::json;
 
-impl HSClient {
+impl RPCClient {
     pub fn get_mempool_info(&self) -> Result<responses::GetMempoolInfo, Error> {
         self.call("getmempoolinfo", &[])
     }
 
-    pub fn get_mempool_ancestors(&self, txhash: &str) -> Result<responses::GetMempoolAncestors, Error> {
+    pub fn get_mempool_ancestors(
+        &self,
+        txhash: &str,
+    ) -> Result<responses::GetMempoolAncestors, Error> {
         self.call("getmempoolancestors", &[json!(txhash), json!(false)])
     }
 
-    pub fn get_mempool_ancestors_verbose(&self, txhash: &str) -> Result<responses::GetMempoolAncestorsVerbose, Error> {
+    pub fn get_mempool_ancestors_verbose(
+        &self,
+        txhash: &str,
+    ) -> Result<responses::GetMempoolAncestorsVerbose, Error> {
         self.call("getmempoolancestors", &[json!(txhash), json!(true)])
     }
 
-    pub fn get_mempool_descendants(&self, txhash: &str) -> Result<responses::GetMempoolDescendants, Error> {
+    pub fn get_mempool_descendants(
+        &self,
+        txhash: &str,
+    ) -> Result<responses::GetMempoolDescendants, Error> {
         self.call("getmempooldescendants", &[json!(txhash), json!(false)])
     }
 
-    pub fn get_mempool_descendants_verbose(&self, txhash: &str) -> Result<responses::GetMempoolDescendants, Error> {
+    pub fn get_mempool_descendants_verbose(
+        &self,
+        txhash: &str,
+    ) -> Result<responses::GetMempoolDescendants, Error> {
         self.call("getmempooldescendants", &[json!(txhash), json!(true)])
     }
 
@@ -40,8 +52,16 @@ impl HSClient {
         self.call("getrawmempool", &[json!(true)])
     }
 
-    pub fn prioritise_transaction(&self, txhash: &str, priority_delta: u32, fee_delta: u32) -> Result<responses::PrioritiseTransaction, Error> {
-        self.call("prioritisetransaction", &[json!(txhash), json!(priority_delta), json!(fee_delta)])
+    pub fn prioritise_transaction(
+        &self,
+        txhash: &str,
+        priority_delta: u32,
+        fee_delta: u32,
+    ) -> Result<responses::PrioritiseTransaction, Error> {
+        self.call(
+            "prioritisetransaction",
+            &[json!(txhash), json!(priority_delta), json!(fee_delta)],
+        )
     }
 
     pub fn estimate_fee(&self, nblocks: &u32) -> Result<responses::EstimateFee, Error> {
@@ -56,9 +76,10 @@ impl HSClient {
         self.call("estimatesmartfee", &[json!(nblocks)])
     }
 
-    pub fn estimate_smart_priority(&self, nblocks: &u32) -> Result<responses::EstimateSmartPriority, Error> {
+    pub fn estimate_smart_priority(
+        &self,
+        nblocks: &u32,
+    ) -> Result<responses::EstimateSmartPriority, Error> {
         self.call("estimatesmartpriority", &[json!(nblocks)])
     }
-    
-
 }

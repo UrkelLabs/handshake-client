@@ -2,12 +2,12 @@ use crate::responses;
 
 use jsonrpc::error::Error;
 
-use crate::client::HSClient;
+use crate::client::RPCClient;
 
 use serde_json;
 use serde_json::json;
 
-impl HSClient {
+impl RPCClient {
 
     //TODO check that the endpoint only parses result{} and not the error or id.
     pub fn get_name_info(&self, name: &str) -> Result<responses::NameInfo, Error> {

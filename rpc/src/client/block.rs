@@ -2,12 +2,12 @@ use crate::responses;
 
 use jsonrpc::error::Error;
 
-use crate::client::HSClient;
+use crate::client::RPCClient;
 
 use serde_json;
 use serde_json::json;
 
-impl HSClient {
+impl RPCClient {
     pub fn get_blockchain_info(&self) -> Result<responses::GetBlockchainInfo, Error> {
         self.call("getblockchaininfo", &[])
     }
@@ -20,12 +20,28 @@ impl HSClient {
         self.call("getblockcount", &[])
     }
 
-    pub fn get_block(&self, blockhash: &str, verbose: bool, details: bool) -> Result<responses::GetBlock, Error> {
-        self.call("getblock", &[json!(blockhash), json!(verbose), json!(details)])
+    pub fn get_block(
+        &self,
+        blockhash: &str,
+        verbose: bool,
+        details: bool,
+    ) -> Result<responses::GetBlock, Error> {
+        self.call(
+            "getblock",
+            &[json!(blockhash), json!(verbose), json!(details)],
+        )
     }
 
-    pub fn get_block_by_height(&self, blockheight: &u32, verbose: bool, details: bool) -> Result<responses::GetBlock, Error> {
-        self.call("getblockbyheight", &[json!(blockheight), json!(verbose), json!(details)])
+    pub fn get_block_by_height(
+        &self,
+        blockheight: &u32,
+        verbose: bool,
+        details: bool,
+    ) -> Result<responses::GetBlock, Error> {
+        self.call(
+            "getblockbyheight",
+            &[json!(blockheight), json!(verbose), json!(details)],
+        )
     }
 
     //TODO returning strange data -> Likely bug in HSD's RPC interface. Removing until fixed
@@ -33,7 +49,11 @@ impl HSClient {
     //     self.call("getblockhash", &[json!(blockheight)])
     // }
 
-    pub fn get_block_header(&self, blockhash: &str, verbose: bool) -> Result<responses::GetBlockHeader, Error> {
+    pub fn get_block_header(
+        &self,
+        blockhash: &str,
+        verbose: bool,
+    ) -> Result<responses::GetBlockHeader, Error> {
         self.call("getblockheader", &[json!(blockhash), json!(verbose)])
     }
 

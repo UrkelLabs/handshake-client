@@ -2,16 +2,22 @@ use crate::responses;
 
 use jsonrpc::error::Error;
 
-use crate::client::HSClient;
+use crate::client::RPCClient;
 
 use serde_json;
 use serde_json::json;
 
-impl HSClient {
-
-    pub fn get_tx_out(&self, txid: &str, index: &u32, includemempool: bool) -> Result<responses::GetTxOut, Error>
-    {
-        self.call("gettxout", &[json!(txid), json!(index), json!(includemempool)])
+impl RPCClient {
+    pub fn get_tx_out(
+        &self,
+        txid: &str,
+        index: &u32,
+        includemempool: bool,
+    ) -> Result<responses::GetTxOut, Error> {
+        self.call(
+            "gettxout",
+            &[json!(txid), json!(index), json!(includemempool)],
+        )
     }
 
     pub fn get_tx_out_set_info(&self) -> Result<responses::GetTxOutSetInfo, Error> {
@@ -22,7 +28,10 @@ impl HSClient {
         self.call("getrawtransaction", &[json!(txhash), json!(false)])
     }
 
-    pub fn get_raw_transaction_verbose(&self, txhash: &str) -> Result<responses::RawTransaction, Error> {
+    pub fn get_raw_transaction_verbose(
+        &self,
+        txhash: &str,
+    ) -> Result<responses::RawTransaction, Error> {
         self.call("getrawtransaction", &[json!(txhash), json!(true)])
     }
 
@@ -34,7 +43,10 @@ impl HSClient {
         self.call("decodescript", &[json!(script)])
     }
 
-    pub fn send_raw_transaction(&self, rawtx: &str) -> Result<responses::SendRawTransaction, Error> {
+    pub fn send_raw_transaction(
+        &self,
+        rawtx: &str,
+    ) -> Result<responses::SendRawTransaction, Error> {
         self.call("sendrawtransaction", &[json!(rawtx)])
     }
 
@@ -43,12 +55,15 @@ impl HSClient {
     ////
     ////TODO signrawtransaction
 
-    pub fn get_tx_out_proof(&self, txidlist: &Vec<String>, blockhash: &str) -> Result<responses::GetTxOutProof, Error> {
+    pub fn get_tx_out_proof(
+        &self,
+        txidlist: &Vec<String>,
+        blockhash: &str,
+    ) -> Result<responses::GetTxOutProof, Error> {
         self.call("gettxoutproof", &[json!(txidlist), json!(blockhash)])
     }
 
     pub fn verify_tx_out_proof(&self, proof: &str) -> Result<responses::VerifyTxOutProof, Error> {
         self.call("verifytxoutproof", &[json!(proof)])
     }
-
 }

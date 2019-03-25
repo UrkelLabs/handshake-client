@@ -1,11 +1,11 @@
 use jsonrpc::error::Error;
 
-use crate::client::HSClient;
+use crate::client::RPCClient;
 
 use serde_json;
 use serde_json::json;
 
-impl HSClient {
+impl RPCClient {
     pub fn prune_blockchain(&self) -> Result<(), Error> {
         self.call("pruneblockchain", &[])
     }
@@ -17,5 +17,4 @@ impl HSClient {
     pub fn reconsider_block(&self, blockhash: &str) -> Result<(), Error> {
         self.call("reconsiderblock", &[json!(blockhash)])
     }
-
 }

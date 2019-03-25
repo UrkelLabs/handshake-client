@@ -2,12 +2,12 @@ use crate::responses;
 
 use jsonrpc::error::Error;
 
-use crate::client::HSClient;
+use crate::client::RPCClient;
 
 use serde_json;
 use serde_json::json;
 
-impl HSClient {
+impl RPCClient {
     pub fn get_connection_count(&self) -> Result<responses::ConnectionCount, Error> {
         self.call("getconnectioncount", &[])
     }
@@ -55,5 +55,4 @@ impl HSClient {
     pub fn clear_banned(&self) -> Result<(), Error> {
         self.call("clearbanned", &[])
     }
-
 }

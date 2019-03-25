@@ -12,14 +12,14 @@ mod network;
 mod node;
 mod tx;
 
-pub struct HSClient {
-    client: Client
+pub struct RPCClient {
+    client: Client,
 }
 
-impl HSClient {
+impl RPCClient {
     //Create a new HSClient
-    pub fn new(uri: &str) -> HSClient {
-        HSClient {
+    pub fn new(uri: &str) -> RPCClient {
+        RPCClient {
             client: Client::new(uri.to_owned(), None, None),
         }
     }
@@ -29,7 +29,7 @@ impl HSClient {
         &self,
         method: &str,
         // input: T,
-        args: &[serde_json::Value]
+        args: &[serde_json::Value],
     ) -> Result<U, Error> {
         // let params = serde_json::to_value(input)?;
 
@@ -44,6 +44,5 @@ impl HSClient {
         self.client
             .send_request(&request)
             .and_then(|res| res.into_result::<U>())
-
     }
 }
