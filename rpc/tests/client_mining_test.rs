@@ -1,10 +1,12 @@
 mod common;
 
-#[test]
-fn test_getnetworkhashps() {
-    let mut client = common::setup();
+use common::setup;
 
-    let networkhashps = client.getnetworkhashps(120, 1);
+#[test]
+fn test_get_network_hashps() {
+    let client = setup();
+
+    let networkhashps = client.get_network_hashps(&120, &1);
 
     dbg!(&networkhashps);
 
@@ -13,18 +15,18 @@ fn test_getnetworkhashps() {
 
 #[test]
 fn test_getmininginfo() {
-    let mut client = common::setup();
+    let client = common::setup();
 
-    let info = client.getmininginfo();
+    let info = client.get_mining_info();
 
     assert!(info.is_ok());
 }
 
 #[test]
 fn test_getwork() {
-    let mut client = common::setup();
+    let client = common::setup();
 
-    let work = client.getwork();
+    let work = client.get_work();
 
     assert!(work.is_ok());
 }

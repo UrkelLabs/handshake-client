@@ -20,6 +20,9 @@ impl RPCClient {
         self.call("getblockcount", &[])
     }
 
+    //TODO break this into multiple functions.
+    //verbose will break this.
+    //details will also break this.
     pub fn get_block(
         &self,
         blockhash: &str,
@@ -34,7 +37,7 @@ impl RPCClient {
 
     pub fn get_block_by_height(
         &self,
-        blockheight: &u32,
+        blockheight: u32,
         verbose: bool,
         details: bool,
     ) -> Result<responses::GetBlock, Error> {

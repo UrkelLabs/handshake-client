@@ -1,5 +1,7 @@
 mod common;
 
+use common::{get_tx_hex, get_txid, setup};
+
 #[test]
 //TODO
 // fn test_gettxout() {
@@ -12,60 +14,56 @@ mod common;
 // }
 //
 #[test]
-fn test_gettxoutsetinfo() {
-    let mut client = common::setup();
+fn test_get_tx_out_set_info() {
+    let client = setup();
 
-    let outsetinfo = client.gettxoutsetinfo();
+    let outsetinfo = client.get_tx_out_set_info();
 
     assert!(outsetinfo.is_ok());
-
 }
 
 #[test]
-fn test_getrawtransaction() {
-    let mut client = common::setup();
+fn test_get_raw_transaction() {
+    let client = setup();
 
-    let txid = common::gettxid();
+    let txid = get_txid();
 
-    let tx = client.getrawtransaction(txid);
+    let tx = client.get_raw_transaction(&txid);
 
     assert!(tx.is_ok())
 }
 
 #[test]
-fn test_getrawtransaction_verbose() {
-    let mut client = common::setup();
+fn test_get_raw_transaction_verbose() {
+    let client = setup();
 
-    let txid = common::gettxid();
+    let txid = get_txid();
 
-    let tx = client.getrawtransactionverbose(txid);
+    let tx = client.get_raw_transaction_verbose(&txid);
 
     assert!(tx.is_ok());
-
 }
 
 #[test]
-fn test_decoderawtransaction() {
-    let mut client = common::setup();
+fn test_decode_raw_transaction() {
+    let client = setup();
 
-    let txhex = common::gettxhex();
+    let txhex = get_tx_hex();
 
-    let tx = client.decoderawtransaction(txhex);
+    let tx = client.decode_raw_transaction(&txhex);
 
     assert!(tx.is_ok());
-
 }
 
 #[test]
-fn test_decodescript() {
-    let mut client = common::setup();
+fn test_decode_script() {
+    let client = setup();
 
-    let script = "76c014af92ad98c7f77559f96430dfef2a6805b87b24f888ac".to_string();
+    let script = "76c014af92ad98c7f77559f96430dfef2a6805b87b24f888ac";
 
-    let decodedscript = client.decodescript(script);
+    let decodedscript = client.decode_script(script);
 
     assert!(decodedscript.is_ok());
-
 }
 
 // #[test]

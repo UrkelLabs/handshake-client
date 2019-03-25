@@ -1,13 +1,14 @@
 mod common;
 
-#[test]
-fn test_getmempoolinfo() {
-    let mut client = common::setup();
+use common::setup;
 
-    let info = client.getmempoolinfo();
+#[test]
+fn test_get_mempool_info() {
+    let client = setup();
+
+    let info = client.get_mempool_info();
 
     assert!(info.is_ok());
-
 }
 
 // #[test]
@@ -18,59 +19,55 @@ fn test_getmempoolinfo() {
 //TODO Finish tests that require a txhash in the mempool.
 //
 #[test]
-fn test_getrawmempool() {
-    let mut client = common::setup();
+fn test_get_raw_mempool() {
+    let client = common::setup();
 
-    let mempool = client.getrawmempool();
+    let mempool = client.get_raw_mempool();
 
     assert!(mempool.is_ok());
-
 }
 
 #[test]
 fn test_getrawmempool_verbose() {
-    let mut client = common::setup();
+    let client = common::setup();
 
-    let mempool = client.getrawmempoolverbose();
+    let mempool = client.get_raw_mempool_verbose();
 
     assert!(mempool.is_ok());
-
 }
 
 #[test]
-fn test_estimatefee() {
-    let mut client = common::setup();
+fn test_estimate_fee() {
+    let client = common::setup();
 
-    let fee = client.estimatefee(10);
+    let fee = client.estimate_fee(&10);
 
     assert!(fee.is_ok());
-
 }
 
 #[test]
-fn test_estimatepriority() {
-    let mut client = common::setup();
+fn test_estimate_priority() {
+    let client = common::setup();
 
-    let priority = client.estimatepriority(10);
+    let priority = client.estimate_priority(&10);
 
     assert!(priority.is_ok());
 }
 
 #[test]
-fn test_estimatesmartfee() {
-    let mut client = common::setup();
+fn test_estimate_smart_fee() {
+    let client = common::setup();
 
-    let smartfee = client.estimatesmartfee(10);
+    let smartfee = client.estimate_smart_fee(&10);
 
     assert!(smartfee.is_ok());
 }
 
 #[test]
-fn test_estimatesmartpriority() {
-    let mut client = common::setup();
+fn test_estimate_smart_priority() {
+    let client = common::setup();
 
-    let smartpriority = client.estimatesmartpriority(10);
+    let smartpriority = client.estimate_smart_priority(&10);
 
     assert!(smartpriority.is_ok());
-
 }

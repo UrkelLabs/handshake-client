@@ -1,11 +1,12 @@
 mod common;
 
-#[test]
-fn test_pruneblockchain() {
-     
-    let mut client = common::setup();
+use common::setup;
 
-    let result = client.pruneblockchain();
+#[test]
+fn test_prune_blockchain() {
+    let client = setup();
+
+    let result = client.prune_blockchain();
 
     assert!(result.is_ok());
 }

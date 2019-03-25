@@ -1,41 +1,43 @@
 mod common;
 
-#[test]
-fn test_getblockchaininfo() {
-    let mut client = common::setup();
+use common::setup;
 
-    let info = client.getblockchaininfo();
+#[test]
+fn test_get_blockchain_info() {
+    let client = setup();
+
+    let info = client.get_blockchain_info();
 
     assert!(info.is_ok());
 }
 
 #[test]
-fn test_getbestblockhash() {
-    let mut client = common::setup();
+fn test_get_best_blockhash() {
+    let client = common::setup();
 
-    let besthash = client.getbestblockhash();
+    let besthash = client.get_best_blockhash();
 
     assert!(besthash.is_ok());
 }
 
 #[test]
-fn test_getblockcount() {
-    let mut client = common::setup();
+fn test_get_block_count() {
+    let client = common::setup();
 
-    let blockcount = client.getblockcount();
+    let blockcount = client.get_block_count();
 
     assert!(blockcount.is_ok());
 }
 
 #[test]
-fn test_getblock_defaults() {
-    let mut client = common::setup();
+fn test_get_block_defaults() {
+    let client = common::setup();
 
     //TODO Future proof this test, so we aren't relying on hardcoded hashes. Grab one from the live
     //chain
-    let hash = "88491d658a9865681ca2c86f92f0bf242c0008dc9ca90c40e5f816cb37c1d8e2".to_string();
-        //TODO test all possible variations of parameters.
-    let block = client.getblock(hash, true, false);
+    let hash = "88491d658a9865681ca2c86f92f0bf242c0008dc9ca90c40e5f816cb37c1d8e2";
+    //TODO test all possible variations of parameters.
+    let block = client.get_block(hash, true, false);
 
     assert!(block.is_ok());
 }
@@ -54,15 +56,13 @@ fn test_getblock_defaults() {
 //    assert!(block.is_ok());
 //}
 
-
-
 #[test]
-fn test_getblockbyheight() {
-    let mut client = common::setup();
+fn test_get_block_by_height() {
+    let client = common::setup();
 
     let height = 100;
 
-    let block = client.getblockbyheight(height, true, false);
+    let block = client.get_block_by_height(height, true, false);
 
     assert!(block.is_ok());
 }
@@ -82,31 +82,29 @@ fn test_getblockbyheight() {
 
 #[test]
 fn test_getblockheader() {
-    let mut client = common::setup();
+    let client = common::setup();
 
-    let hash = "88491d658a9865681ca2c86f92f0bf242c0008dc9ca90c40e5f816cb37c1d8e2".to_string();
+    let hash = "88491d658a9865681ca2c86f92f0bf242c0008dc9ca90c40e5f816cb37c1d8e2";
 
-    let blockheader = client.getblockheader(hash, true);
+    let blockheader = client.get_block_header(hash, true);
 
     assert!(blockheader.is_ok());
 }
 
 #[test]
 fn test_chaintips() {
-    let mut client = common::setup();
+    let client = common::setup();
 
-    let tips = client.getchaintips();
+    let tips = client.get_chain_tips();
 
     assert!(tips.is_ok());
-
 }
 
 #[test]
 fn test_getdifficulty() {
-    let mut client = common::setup();
+    let client = common::setup();
 
-    let difficulty = client.getdifficulty();
+    let difficulty = client.get_difficulty();
 
     assert!(difficulty.is_ok());
-
 }
