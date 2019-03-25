@@ -1,0 +1,1 @@
+{"rustc":5105358705442676925,"features":"[]","target":2912361263398296966,"profile":16667052390852464666,"path":10872709659218687626,"deps":[["hyper v0.12.24","hyper",4801182962531716949]],"local":[{"MtimeBased":[[1549917714,140619831],".fingerprint/rust-handshake-rpc-74324a373e006bb3/dep-lib-rust_handshake_rpc-74324a373e006bb3"]}],"rustflags":[],"edition":"Edition2018"}

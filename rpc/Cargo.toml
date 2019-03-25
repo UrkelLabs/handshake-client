@@ -1,0 +1,16 @@
+[package]
+name = "handshake-rpc"
+version = "0.1.0"
+authors = ["Handshake Alliance Team"]
+edition = "2018"
+
+[dependencies]
+serde = "1"
+serde_derive = "1"
+serde_json = "1"
+jsonrpc = { git="https://github.com/apoelstra/rust-jsonrpc" }
+
+
+
+
+
