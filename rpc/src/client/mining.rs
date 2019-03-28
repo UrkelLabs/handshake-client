@@ -1,8 +1,7 @@
 use crate::responses;
 
-use jsonrpc::error::Error;
-
 use crate::client::RPCClient;
+use crate::error::Error;
 
 use serde_json::json;
 

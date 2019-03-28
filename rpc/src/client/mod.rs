@@ -1,5 +1,5 @@
+use crate::error::Error;
 use jsonrpc::client::Client;
-use jsonrpc::Error;
 
 use serde::de::DeserializeOwned;
 use serde_json;
@@ -44,5 +44,6 @@ impl RPCClient {
         self.client
             .send_request(&request)
             .and_then(|res| res.into_result::<U>())
+            .map_err(Error::from)
     }
 }
