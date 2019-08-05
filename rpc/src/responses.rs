@@ -61,7 +61,7 @@ pub type Stop = String;
 #[serde(rename_all = "camelCase")]
 pub struct CreateMultiSig {
     pub address: String,
-    pub redeem_script: String
+    pub redeem_script: String,
 }
 
 /// "signmessagewithprivkey" command
@@ -76,7 +76,7 @@ pub type VerifyMessage = bool;
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct GetBlockchainInfo {
     pub chain: String,
-    pub blocks: u32, 
+    pub blocks: u32,
     pub headers: u32,
     #[serde(rename = "bestblockhash")]
     pub best_blockhash: String,
@@ -90,7 +90,7 @@ pub struct GetBlockchainInfo {
     pub prune_height: Option<u32>,
     //Soft forks we need to develop out that struct XXX TODO.
     #[serde(skip)]
-    pub softforks: String
+    pub softforks: String,
 }
 
 /// "getbestblockhash"
@@ -132,10 +132,10 @@ pub struct GetBlock {
     #[serde(rename = "previousblockhash")]
     pub previous_blockhash: String,
     #[serde(rename = "nextblockhash")]
-    pub next_blockhash: Option<String>
+    pub next_blockhash: Option<String>,
 }
 
-/// "getblockhash" 
+/// "getblockhash"
 pub type GetBlockHash = String;
 
 /// "getblockheader"
@@ -165,7 +165,7 @@ pub struct GetBlockHeader {
     #[serde(rename = "previousblockhash")]
     pub previous_blockhash: String,
     #[serde(rename = "nextblockhash")]
-    pub next_blockhash: Option<String>
+    pub next_blockhash: Option<String>,
 }
 
 /// "getchaintips"
@@ -174,7 +174,7 @@ pub struct ChainTip {
     pub height: u32,
     pub hash: String,
     pub branchlen: u32,
-    pub status: String 
+    pub status: String,
 }
 
 pub type GetChainTips = Vec<ChainTip>;
@@ -182,24 +182,23 @@ pub type GetChainTips = Vec<ChainTip>;
 /// "getdifficulty"
 pub type GetDifficulty = f64;
 
-
 // --- Mempool Responses --- //
 
 /// "getmempoolinfo"
 #[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct GetMempoolInfo{
+pub struct GetMempoolInfo {
     pub size: u32,
     pub bytes: u64,
     pub usage: u64,
     pub maxmempool: u64,
     #[serde(rename = "mempoolminfee")]
-    pub mempool_min_fee: f64
+    pub mempool_min_fee: f64,
 }
 
 /// "getmempoolancestors" verbose = 0
 pub type GetMempoolAncestors = Vec<String>;
 
-/// "getmempoolentry" 
+/// "getmempoolentry"
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct MempoolEntry {
     pub size: u32,
@@ -256,16 +255,15 @@ pub type EstimatePriority = f64;
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct EstimateSmartFee {
     pub fee: f64,
-    pub blocks: u32
+    pub blocks: u32,
 }
 
 /// "estimatesmartpriority
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct EstimateSmartPriority {
     pub priority: f64,
-    pub blocks: u32
+    pub blocks: u32,
 }
-
 
 // --- Mining Responses --- //
 /// "getnetworkhashps" command
@@ -301,19 +299,19 @@ pub struct GetWork {
     pub data: String,
     pub target: String,
     pub height: u32,
-    pub time: u32
+    pub time: u32,
 }
 
 //TODO needs some serious help with types and naming
 /// "getblocktemplate" command
 #[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct BlockTemplate{
+pub struct BlockTemplate {
     pub capabilities: Vec<String>,
     pub mutable: Vec<String>,
     pub version: u32,
     pub rules: Vec<String>,
     //Not going to work
-    pub vb_available: String,
+    pub vb_available: VbAvailable,
     pub vb_required: u32,
     pub height: u32,
     pub previous_blockhash: String,
@@ -340,15 +338,17 @@ pub struct BlockTemplate{
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct CoinbaseAux {
-    pub flags: String
-}
+pub struct VbAvailable {}
 
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct CoinbaseAux {
+    pub flags: String,
+}
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Address {
     pub version: u32,
-    pub hash: String
+    pub hash: String,
 }
 
 /// "gettxout"
@@ -359,7 +359,7 @@ pub struct GetTxOut {
     pub value: u64,
     pub address: Address,
     pub version: u32,
-    pub coinbase: bool
+    pub coinbase: bool,
 }
 
 /// "gettxoutsetinfo"
@@ -372,9 +372,8 @@ pub struct GetTxOutSetInfo {
     pub bytes_serialized: u32,
     pub hash_serialized: u32,
     pub total_amount: f64,
-    pub total_burned: f64
+    pub total_burned: f64,
 }
-
 
 /// "getrawtransaction" verbose = false
 pub type GetRawTransaction = String;
@@ -385,7 +384,7 @@ pub struct Vin {
     pub txid: String,
     pub vout: u64,
     pub txinwitness: Vec<String>,
-    pub sequence: u64
+    pub sequence: u64,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -393,7 +392,7 @@ pub struct Covenant {
     #[serde(rename = "type")]
     type_: u32,
     //TODO make this generic -> I think this will break on specific covenants.
-    items: Vec<String>
+    items: Vec<String>,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -401,7 +400,7 @@ pub struct Vout {
     pub value: u64,
     pub n: u32,
     pub address: Address,
-    pub covenant: Covenant
+    pub covenant: Covenant,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -417,7 +416,7 @@ pub struct RawTransaction {
     pub blockhash: Option<String>,
     pub confirmations: u32,
     pub time: u64,
-    pub blocktime: u64
+    pub blocktime: u64,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -444,100 +443,98 @@ pub type ConnectionCount = u32;
 pub struct PeerInfo {
     pub id: u32,
     pub addr: String,
-    #[serde(rename="addrlocal")]
+    #[serde(rename = "addrlocal")]
     pub addr_local: String,
     pub name: String,
     pub services: String,
-    #[serde(rename="relaytxes")]
+    #[serde(rename = "relaytxes")]
     pub relay_txes: bool,
-    #[serde(rename="lastsend")]
+    #[serde(rename = "lastsend")]
     pub last_send: u64,
-    #[serde(rename="lastrecv")]
+    #[serde(rename = "lastrecv")]
     pub last_recv: u64,
-    #[serde(rename="bytessent")]
+    #[serde(rename = "bytessent")]
     pub bytes_sent: u64,
-    #[serde(rename="bytesrecv")]
+    #[serde(rename = "bytesrecv")]
     pub bytes_recv: u64,
-    #[serde(rename="conntime")]
+    #[serde(rename = "conntime")]
     pub conn_time: u64,
-    #[serde(rename="timeoffset")]
+    #[serde(rename = "timeoffset")]
     pub time_offset: u64,
-    #[serde(rename="pingtime")]
+    #[serde(rename = "pingtime")]
     pub ping_time: f64,
-    #[serde(rename="minping")]
+    #[serde(rename = "minping")]
     pub min_ping: u64,
     pub version: u32,
-    #[serde(rename="subver")]
+    #[serde(rename = "subver")]
     pub sub_ver: String,
     pub inbound: bool,
-    #[serde(rename="startingheight")]
+    #[serde(rename = "startingheight")]
     pub starting_height: u32,
-    #[serde(rename="besthash")]
+    #[serde(rename = "besthash")]
     pub best_hash: String,
-    #[serde(rename="bestheight")]
+    #[serde(rename = "bestheight")]
     pub best_height: u32,
-    #[serde(rename="banscore")]
+    #[serde(rename = "banscore")]
     pub ban_score: u32,
     pub inflight: Vec<String>,
-    pub whitelisted: bool
+    pub whitelisted: bool,
 }
-
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct NodeAddress {
     pub address: String,
-    pub connected: String
+    pub connected: String,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct AddedNodeInfo {
     pub addednode: String,
     pub connected: bool,
-    pub addresses: Vec<NodeAddress>
+    pub addresses: Vec<NodeAddress>,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct NetTotals {
-    #[serde(rename="totalbytesrecv")]
+    #[serde(rename = "totalbytesrecv")]
     total_bytes_recv: u64,
-    #[serde(rename="totalbytessent")]
+    #[serde(rename = "totalbytessent")]
     total_bytes_sent: u64,
-    #[serde(rename="timemillis")]
-    time_millis: u64
+    #[serde(rename = "timemillis")]
+    time_millis: u64,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct LocalAddress {
     pub address: String,
     pub port: u32,
-    pub score: u32
+    pub score: u32,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct NetworkInfo {
     pub version: String,
-    #[serde(rename="subversion")]
+    #[serde(rename = "subversion")]
     pub sub_version: String,
-    #[serde(rename="protocolversion")]
+    #[serde(rename = "protocolversion")]
     pub protocol_version: String,
-    #[serde(rename="localservices")]
+    #[serde(rename = "localservices")]
     pub local_services: String,
-    #[serde(rename="localrelay")]
+    #[serde(rename = "localrelay")]
     pub local_relay: bool,
-    #[serde(rename="timeoffset")]
+    #[serde(rename = "timeoffset")]
     pub time_offset: u64,
-    #[serde(rename="networkactive")]
+    #[serde(rename = "networkactive")]
     pub network_active: bool,
     pub connections: u32,
     pub networks: Vec<String>,
-    #[serde(rename="relayfee")]
+    #[serde(rename = "relayfee")]
     pub relay_fee: f64,
-    #[serde(rename="incrementalfee")]
+    #[serde(rename = "incrementalfee")]
     pub incremental_fee: f64,
-    #[serde(rename="localaddresses")]
+    #[serde(rename = "localaddresses")]
     pub local_addresses: Vec<LocalAddress>,
-    pub warnings: String
-
+    pub warnings: String,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -545,9 +542,8 @@ pub struct BannedNode {
     pub address: String,
     pub banned_until: u64,
     pub ban_created: u64,
-    pub ban_reason: String
+    pub ban_reason: String,
 }
-
 
 // --- Naming Responses --- //
 
@@ -570,24 +566,23 @@ pub struct NameProof {
     pub name: String,
     pub key: String,
     pub proof: Proof,
-
 }
 
 //TODO needs to actually be an enum -> See: https://handshake-org.github.io/api-docs/#getnameproof
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Proof {
-    #[serde(rename="type")]
+    #[serde(rename = "type")]
     pub type_: String,
     pub depth: u32,
     pub nodes: Vec<Vec<String>>,
-    pub value: String
+    pub value: String,
 }
 
 //TODO no idea if this works -> Please test
 pub type NameResource = HashMap<String, String>;
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
-#[serde(rename_all="camelCase")]
+#[serde(rename_all = "camelCase")]
 pub struct Name {
     pub name: String,
     pub name_hash: String,
@@ -599,10 +594,10 @@ pub struct Name {
     pub highest: u64,
     pub data: String,
     pub transfer: u32,
-    pub revoked: u32, 
+    pub revoked: u32,
     pub claimed: bool,
     pub weak: bool,
-    pub stats: NameStats
+    pub stats: NameStats,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -617,19 +612,19 @@ pub struct NameStats {
     renewal_period_start: u32,
     renewal_period_end: u32,
     blocks_until_expire: u32,
-    days_until_expire: f64
+    days_until_expire: f64,
 }
 
 //TODO check output types
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct NameInfo {
     pub start: NameStart,
-    pub info: Name
+    pub info: Name,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct NameStart {
     pub reserved: bool,
     pub week: u32,
-    pub start: u32
+    pub start: u32,
 }
