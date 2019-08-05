@@ -305,6 +305,7 @@ pub struct GetWork {
 //TODO needs some serious help with types and naming
 /// "getblocktemplate" command
 #[derive(Debug, Clone, Deserialize, Serialize)]
+#[serde(rename_all = "lowercase")]
 pub struct BlockTemplate {
     pub capabilities: Vec<String>,
     pub mutable: Vec<String>,
