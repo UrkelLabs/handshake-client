@@ -305,33 +305,49 @@ pub struct GetWork {
 //TODO needs some serious help with types and naming
 /// "getblocktemplate" command
 #[derive(Debug, Clone, Deserialize, Serialize)]
-#[serde(rename_all = "lowercase")]
 pub struct BlockTemplate {
     pub capabilities: Vec<String>,
     pub mutable: Vec<String>,
     pub version: u32,
     pub rules: Vec<String>,
     //Not going to work
+    #[serde(rename = "vbavailable")]
     pub vb_available: VbAvailable,
+    #[serde(rename = "vbrequired")]
     pub vb_required: u32,
     pub height: u32,
+    #[serde(rename = "previousblockhash")]
     pub previous_blockhash: String,
+    #[serde(rename = "treeroot")]
     pub tree_root: String,
+    #[serde(rename = "filterroot")]
     pub filter_root: String,
+    #[serde(rename = "reservedroot")]
     pub reserved_root: String,
     pub target: String,
     pub bits: String,
+    #[serde(rename = "noncerange")]
     pub nonce_range: String,
+    #[serde(rename = "curtime")]
     pub cur_time: u64,
+    #[serde(rename = "mintime")]
     pub min_time: u64,
+    #[serde(rename = "maxtime")]
     pub max_time: u64,
     pub expires: u64,
+    #[serde(rename = "sigoplimit")]
     pub sig_op_limit: u64,
+    #[serde(rename = "sizelimit")]
     pub size_limit: u64,
+    #[serde(rename = "weightlimit")]
     pub weight_limit: u64,
+    #[serde(rename = "longpollid")]
     pub long_poll_id: String,
+    #[serde(rename = "submitold")]
     pub submit_old: bool,
+    #[serde(rename = "coinbaseaux")]
     pub coinbase_aux: CoinbaseAux,
+    #[serde(rename = "coinbasevalue")]
     pub coinbase_value: u64,
     pub claims: Vec<String>,
     pub airdrops: Vec<String>,
