@@ -29,11 +29,14 @@ impl RPCClient {
     //     self.call("getworklp", &[])
     // }
 
+    //TODO this needs to be totally revamped. See here for all params: https://bitcoincore.org/en/doc/0.17.0/rpc/mining/getblocktemplate/
+    //Make them optional as well.
+    //For now, going to remove them entirely.
     pub fn get_block_template(
         &self,
-        json_request_object: &serde_json::Value,
+        // json_request_object: &serde_json::Value,
     ) -> Result<responses::BlockTemplate, Error> {
-        self.call("getblocktemplate", &[json!(json_request_object)])
+        self.call("getblocktemplate", &[json!({})])
     }
 
     //TODO - both are currently erroring with out of bounds errors
