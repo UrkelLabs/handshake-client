@@ -1,3 +1,4 @@
+use extended_primitives::{Buffer, Hash, Uint256};
 use serde_derive::{Deserialize, Serialize};
 
 use std::collections::HashMap;
@@ -317,14 +318,14 @@ pub struct BlockTemplate {
     pub vb_required: u32,
     pub height: u32,
     #[serde(rename = "previousblockhash")]
-    pub previous_blockhash: String,
+    pub previous_blockhash: Hash,
     #[serde(rename = "treeroot")]
-    pub tree_root: String,
+    pub tree_root: Hash,
     #[serde(rename = "filterroot")]
-    pub filter_root: String,
+    pub filter_root: Hash,
     #[serde(rename = "reservedroot")]
-    pub reserved_root: String,
-    pub target: String,
+    pub reserved_root: Hash,
+    pub target: Uint256,
     pub bits: String,
     #[serde(rename = "noncerange")]
     pub nonce_range: String,
