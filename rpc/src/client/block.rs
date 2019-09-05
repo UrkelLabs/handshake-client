@@ -1,10 +1,6 @@
 use crate::responses;
-
 use crate::client::HandshakeRpcClient;
-
-use serde_json;
 use serde_json::json;
-
 use crate::Result;
 
 impl HandshakeRpcClient {

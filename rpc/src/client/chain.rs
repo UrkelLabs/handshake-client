@@ -1,19 +1,22 @@
-use crate::client::RPCClient;
-use crate::error::Error;
-
-use serde_json;
+use crate::client::HandshakeRpcClient;
+use crate::Result;
 use serde_json::json;
 
-impl RPCClient {
-    pub fn prune_blockchain(&self) -> Result<(), Error> {
-        self.call("pruneblockchain", &[])
+impl HandshakeRpcClient {
+    pub async fn prune_blockchain(&self) -> Result<()> {
+
+        self.call("pruneblockchain", &[]).await
     }
 
-    pub fn invalidate_block(&self, blockhash: &str) -> Result<(), Error> {
-        self.call("invalidateblock", &[json!(blockhash)])
+    pub async fn invalidate_block(&self, blockhash: &str) -> Result<()> {
+
+        let params = vec![json!(blockhash)];
+        self.call("invalidateblock", &params).await
     }
 
-    pub fn reconsider_block(&self, blockhash: &str) -> Result<(), Error> {
-        self.call("reconsiderblock", &[json!(blockhash)])
+    pub async fn reconsider_block(&self, blockhash: &str) -> Result<()> {
+
+        let params = vec![json!(blockhash)];
+        self.call("reconsiderblock", &params).await
     }
 }
