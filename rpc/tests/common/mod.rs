@@ -1,6 +1,6 @@
-use handshake_rpc::RPCClient;
+use handshake_rpc::HandshakeRpcClient;
 
-pub fn setup() -> RPCClient {
+pub fn setup() -> HandshakeRpcClient {
     RPCClient::new("http://localhost:13037")
 }
 
