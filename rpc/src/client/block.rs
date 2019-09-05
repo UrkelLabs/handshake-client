@@ -1,50 +1,55 @@
 use crate::responses;
 
-use crate::client::RPCClient;
-
-use crate::error::Error;
+use crate::client::HandshakeRpcClient;
 
 use serde_json;
 use serde_json::json;
 
-impl RPCClient {
-    pub fn get_blockchain_info(&self) -> Result<responses::GetBlockchainInfo, Error> {
-        self.call("getblockchaininfo", &[])
+use crate::Result;
+
+impl HandshakeRpcClient {
+    pub async fn get_blockchain_info(&self) -> Result<responses::GetBlockchainInfo> {
+        self.call("getblockchaininfo", &[]).await
     }
 
-    pub fn get_best_blockhash(&self) -> Result<responses::GetBestBlockHash, Error> {
-        self.call("getbestblockhash", &[])
+    pub async fn get_best_blockhash(&self) -> Result<responses::GetBestBlockHash> {
+        self.call("getbestblockhash", &[]).await
     }
 
-    pub fn get_block_count(&self) -> Result<responses::GetBlockCount, Error> {
-        self.call("getblockcount", &[])
+    pub async fn get_block_count(&self) -> Result<responses::GetBlockCount> {
+        self.call("getblockcount", &[]).await
     }
 
     //TODO break this into multiple functions.
     //verbose will break this.
     //details will also break this.
-    pub fn get_block(
+    pub async fn get_block(
         &self,
         blockhash: &str,
         verbose: bool,
         details: bool,
-    ) -> Result<responses::GetBlock, Error> {
+    ) -> Result<responses::GetBlock> {
+
+        let params = vec![json!(blockhash), json!(verbose), json!(details)];
+
         self.call(
             "getblock",
-            &[json!(blockhash), json!(verbose), json!(details)],
-        )
+            &params,
+        ).await
     }
 
-    pub fn get_block_by_height(
+    pub async fn get_block_by_height(
         &self,
         blockheight: u32,
         verbose: bool,
         details: bool,
-    ) -> Result<responses::GetBlock, Error> {
+    ) -> Result<responses::GetBlock> {
+        let params = vec![json!(blockheight), json!(verbose), json!(details)];
+
         self.call(
             "getblockbyheight",
-            &[json!(blockheight), json!(verbose), json!(details)],
-        )
+            &params,
+        ).await
     }
 
     //TODO returning strange data -> Likely bug in HSD's RPC interface. Removing until fixed
@@ -52,19 +57,20 @@ impl RPCClient {
     //     self.call("getblockhash", &[json!(blockheight)])
     // }
 
-    pub fn get_block_header(
+    pub async fn get_block_header(
         &self,
         blockhash: &str,
         verbose: bool,
-    ) -> Result<responses::GetBlockHeader, Error> {
-        self.call("getblockheader", &[json!(blockhash), json!(verbose)])
+    ) -> Result<responses::GetBlockHeader> {
+        let params = vec![json!(blockhash), json!(verbose)];
+        self.call("getblockheader", &params).await
     }
 
-    pub fn get_chain_tips(&self) -> Result<responses::GetChainTips, Error> {
-        self.call("getchaintips", &[])
+    pub async fn get_chain_tips(&self) -> Result<responses::GetChainTips> {
+        self.call("getchaintips", &[]).await
     }
 
-    pub fn get_difficulty(&self) -> Result<responses::GetDifficulty, Error> {
-        self.call("getdifficulty", &[])
+    pub async fn get_difficulty(&self) -> Result<responses::GetDifficulty> {
+        self.call("getdifficulty", &[]).await
     }
 }
