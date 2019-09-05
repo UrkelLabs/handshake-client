@@ -8,16 +8,15 @@ edition = "2018"
 
 # Known External
 extended-primitives = { git="https://github.com/UrkelLabs/extended-primitives", features=["serialization"]}
+rpc-json-client = { git= "https://github.com/UrkelLabs/rpc"}
 
 # Unknown External
 serde = "1"
 serde_derive = "1"
 serde_json = "1"
-hyper = "0.13.0-alpha.1"
 futures-preview = "=0.3.0-alpha.18"
 
-# Remove
-jsonrpc = { git="https://github.com/apoelstra/rust-jsonrpc" }
+
 
 
 
