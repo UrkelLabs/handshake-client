@@ -1,52 +1,49 @@
 use crate::responses;
-
-use crate::client::RPCClient;
-use crate::error::Error;
-
-use serde_json;
+use crate::client::HandshakeRpcClient;
 use serde_json::json;
+use crate::Result;
 
-impl RPCClient {
-    pub fn get_tx_out(
+impl HandshakeRpcClient {
+    pub async fn get_tx_out(
         &self,
         txid: &str,
         index: &u32,
         includemempool: bool,
-    ) -> Result<responses::GetTxOut, Error> {
+    ) -> Result<responses::GetTxOut> {
         self.call(
             "gettxout",
             &[json!(txid), json!(index), json!(includemempool)],
-        )
+        ).await
     }
 
-    pub fn get_tx_out_set_info(&self) -> Result<responses::GetTxOutSetInfo, Error> {
-        self.call("gettxoutsetinfo", &[])
+    pub async fn get_tx_out_set_info(&self) -> Result<responses::GetTxOutSetInfo> {
+        self.call("gettxoutsetinfo", &[]).await
     }
 
-    pub fn get_raw_transaction(&self, txhash: &str) -> Result<responses::GetRawTransaction, Error> {
-        self.call("getrawtransaction", &[json!(txhash), json!(false)])
+    pub async fn get_raw_transaction(&self, txhash: &str) -> Result<responses::GetRawTransaction> {
+        self.call("getrawtransaction", &[json!(txhash), json!(false)]).await
     }
 
-    pub fn get_raw_transaction_verbose(
+    pub async fn get_raw_transaction_verbose(
         &self,
         txhash: &str,
-    ) -> Result<responses::RawTransaction, Error> {
-        self.call("getrawtransaction", &[json!(txhash), json!(true)])
+    ) -> Result<responses::RawTransaction> {
+        self.call("getrawtransaction", &[json!(txhash), json!(true)]).await
     }
 
-    pub fn decode_raw_transaction(&self, rawtx: &str) -> Result<responses::RawTransaction, Error> {
-        self.call("decoderawtransaction", &[json!(rawtx)])
+    pub async fn decode_raw_transaction(&self, rawtx: &str) -> Result<responses::RawTransaction> {
+        self.call("decoderawtransaction", &[json!(rawtx)]).await
     }
 
-    pub fn decode_script(&self, script: &str) -> Result<responses::DecodeScript, Error> {
-        self.call("decodescript", &[json!(script)])
+    pub async fn decode_script(&self, script: &str) -> Result<responses::DecodeScript> {
+        self.call("decodescript", &[json!(script)]).await
     }
 
-    pub fn send_raw_transaction(
+    pub async fn send_raw_transaction(
         &self,
         rawtx: &str,
-    ) -> Result<responses::SendRawTransaction, Error> {
-        self.call("sendrawtransaction", &[json!(rawtx)])
+    ) -> Result<responses::SendRawTransaction> {
+        self.call("sendrawtransaction", &[json!(rawtx)]).await
     }
 
     ////Not sure how we are going to implement this one - TODO
@@ -54,15 +51,15 @@ impl RPCClient {
     ////
     ////TODO signrawtransaction
 
-    pub fn get_tx_out_proof(
+    pub async fn get_tx_out_proof(
         &self,
         txidlist: &Vec<String>,
         blockhash: &str,
-    ) -> Result<responses::GetTxOutProof, Error> {
-        self.call("gettxoutproof", &[json!(txidlist), json!(blockhash)])
+    ) -> Result<responses::GetTxOutProof> {
+        self.call("gettxoutproof", &[json!(txidlist), json!(blockhash)]).await
     }
 
-    pub fn verify_tx_out_proof(&self, proof: &str) -> Result<responses::VerifyTxOutProof, Error> {
-        self.call("verifytxoutproof", &[json!(proof)])
+    pub async fn verify_tx_out_proof(&self, proof: &str) -> Result<responses::VerifyTxOutProof> {
+        self.call("verifytxoutproof", &[json!(proof)]).await
     }
 }
