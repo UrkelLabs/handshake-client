@@ -1,14 +1,13 @@
-use rpc_json_client::RpcClient;
 use crate::Result;
-
+use rpc_json_client::RpcClient;
 
 mod block;
 mod chain;
 mod mempool;
 mod mining;
+mod names;
 mod network;
 mod node;
-mod names;
 mod tx;
 
 //TODO can we use runtime here, and force our own executor into hyper?
@@ -31,7 +30,7 @@ impl HandshakeRpcClient {
         method: &str,
         params: &[serde_json::Value],
     ) -> Result<T> {
-        let res =  self.client.execute(method, params).await?;
+        let res = self.client.execute(method, params).await?;
 
         Ok(res)
     }

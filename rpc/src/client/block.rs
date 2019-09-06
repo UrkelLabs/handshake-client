@@ -1,7 +1,7 @@
-use crate::responses;
 use crate::client::HandshakeRpcClient;
-use serde_json::json;
+use crate::responses;
 use crate::Result;
+use serde_json::json;
 
 impl HandshakeRpcClient {
     pub async fn get_blockchain_info(&self) -> Result<responses::GetBlockchainInfo> {
@@ -25,13 +25,9 @@ impl HandshakeRpcClient {
         verbose: bool,
         details: bool,
     ) -> Result<responses::GetBlock> {
-
         let params = vec![json!(blockhash), json!(verbose), json!(details)];
 
-        self.call(
-            "getblock",
-            &params,
-        ).await
+        self.call("getblock", &params).await
     }
 
     pub async fn get_block_by_height(
@@ -42,10 +38,7 @@ impl HandshakeRpcClient {
     ) -> Result<responses::GetBlock> {
         let params = vec![json!(blockheight), json!(verbose), json!(details)];
 
-        self.call(
-            "getblockbyheight",
-            &params,
-        ).await
+        self.call("getblockbyheight", &params).await
     }
 
     //TODO returning strange data -> Likely bug in HSD's RPC interface. Removing until fixed

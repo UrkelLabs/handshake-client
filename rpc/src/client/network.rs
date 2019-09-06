@@ -1,7 +1,7 @@
-use crate::responses;
 use crate::client::HandshakeRpcClient;
-use serde_json::json;
+use crate::responses;
 use crate::Result;
+use serde_json::json;
 
 impl HandshakeRpcClient {
     pub async fn get_connection_count(&self) -> Result<responses::ConnectionCount> {
@@ -20,19 +20,16 @@ impl HandshakeRpcClient {
     //Consider breaking this into multiple functions since we only have 3 acceptable cmds
     //"add", "onetry", "remove"
     pub async fn add_node(&self, addr: &str, cmd: &str) -> Result<()> {
-
         let params = vec![json!(addr), json!(cmd)];
         self.call("addnode", &params).await
     }
 
     pub async fn disconnect_node(&self, addr: &str) -> Result<()> {
-
         let params = vec![json!(addr)];
         self.call("disconnectnode", &params).await
     }
 
     pub async fn get_added_node_info(&self, addr: &str) -> Result<responses::AddedNodeInfo> {
-
         let params = vec![json!(addr)];
         self.call("getaddednodeinfo", &params).await
     }
@@ -47,7 +44,6 @@ impl HandshakeRpcClient {
 
     //AS with add_node this command has a set amount of cmds so consider breaking this up
     pub async fn set_ban(&self, addr: &str, cmd: &str) -> Result<()> {
-
         let params = vec![json!(addr), json!(cmd)];
         self.call("setban", &params).await
     }

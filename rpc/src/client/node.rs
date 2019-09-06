@@ -1,7 +1,7 @@
-use crate::responses;
 use crate::client::HandshakeRpcClient;
-use serde_json::json;
+use crate::responses;
 use crate::Result;
+use serde_json::json;
 
 impl HandshakeRpcClient {
     /// Show information about this node.
@@ -15,12 +15,14 @@ impl HandshakeRpcClient {
 
     /// Set the log level on the node.
     pub async fn set_log_level(&self, level: &str) -> Result<()> {
-        self.call("setloglevel", &[json!(level)]).await
+        let params = vec![json!(level)];
+        self.call("setloglevel", &params).await
     }
 
     /// validate an address
     pub async fn validate_address(&self, address: &str) -> Result<responses::ValidateAddress> {
-        self.call("validateaddress", &[json!(address)]).await
+        let params = vec![json!(address)];
+        self.call("validateaddress", &params).await
     }
 
     pub async fn stop(&self) -> Result<responses::Stop> {
@@ -32,7 +34,8 @@ impl HandshakeRpcClient {
         nrequired: &u32,
         keys: &Vec<String>,
     ) -> Result<responses::CreateMultiSig> {
-        self.call("createmultisig", &[json!(nrequired), json!(keys)]).await
+        let params = vec![json!(nrequired), json!(keys)];
+        self.call("createmultisig", &params).await
     }
 
     pub async fn sign_message_with_priv_key(
@@ -40,7 +43,8 @@ impl HandshakeRpcClient {
         privkey: &str,
         message: &str,
     ) -> Result<responses::SignMessageWithPrivKey> {
-        self.call("signmessagewithprivkey", &[json!(privkey), json!(message)]).await
+        let params = vec![json!(privkey), json!(message)];
+        self.call("signmessagewithprivkey", &params).await
     }
 
     pub async fn verify_message(
@@ -49,13 +53,12 @@ impl HandshakeRpcClient {
         signature: &str,
         message: &str,
     ) -> Result<responses::VerifyMessage> {
-        self.call(
-            "verifymessage",
-            &[json!(address), json!(signature), json!(message)],
-        ).await
+        let params = vec![json!(address), json!(signature), json!(message)];
+        self.call("verifymessage", &params).await
     }
 
     pub async fn set_mock_time(&self, time: &u64) -> Result<()> {
-        self.call("setmocktime", &[json!(time)]).await
+        let params = vec![json!(time)];
+        self.call("setmocktime", &params).await
     }
 }

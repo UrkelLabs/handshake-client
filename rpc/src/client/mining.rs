@@ -1,7 +1,7 @@
-use crate::responses;
 use crate::client::HandshakeRpcClient;
-use serde_json::json;
+use crate::responses;
 use crate::Result;
+use serde_json::json;
 
 impl HandshakeRpcClient {
     // TODO The return type here is accurate, but hasn't been given a struct
@@ -11,7 +11,8 @@ impl HandshakeRpcClient {
         blocks: &u32,
         height: &u32,
     ) -> Result<responses::GetNetworkHashps> {
-        self.call("getnetworkhashps", &[json!(blocks), json!(height)]).await
+        let params = vec![json!(blocks), json!(height)];
+        self.call("getnetworkhashps", &params).await
     }
 
     pub async fn get_mining_info(&self) -> Result<responses::GetMiningInfo> {
@@ -34,7 +35,8 @@ impl HandshakeRpcClient {
         &self,
         // json_request_object: &serde_json::Value,
     ) -> Result<responses::BlockTemplate> {
-        self.call("getblocktemplate", &[json!({})]).await
+        let params = vec![json!({})];
+        self.call("getblocktemplate", &params).await
     }
 
     //TODO - both are currently erroring with out of bounds errors
@@ -49,7 +51,8 @@ impl HandshakeRpcClient {
     //}
 
     pub async fn set_generate(&self, mining: &u32, proclimit: &u32) -> Result<bool> {
-        self.call("setgenerate", &[json!(mining), json!(proclimit)]).await
+        let params = vec![json!(mining), json!(proclimit)];
+        self.call("setgenerate", &params).await
     }
 
     pub async fn get_generate(&self) -> Result<bool> {
@@ -58,7 +61,8 @@ impl HandshakeRpcClient {
 
     //TODO check params -> Might have "maxretries"
     pub async fn generate(&self, num_blocks: &u32) -> Result<Vec<String>> {
-        self.call("generate", &[json!(num_blocks)]).await
+        let params = vec![json!(num_blocks)];
+        self.call("generate", &params).await
     }
 
     pub async fn generate_to_address(
@@ -66,6 +70,7 @@ impl HandshakeRpcClient {
         num_blocks: &u32,
         address: &str,
     ) -> Result<Vec<String>> {
-        self.call("generatetoaddress", &[json!(num_blocks), json!(address)]).await
+        let params = vec![json!(num_blocks), json!(address)];
+        self.call("generatetoaddress", &params).await
     }
 }
