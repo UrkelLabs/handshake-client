@@ -2,7 +2,7 @@ use crate::Result;
 use rpc_json_client::RpcClient;
 
 mod block;
-// mod chain;
+mod chain;
 // mod mempool;
 // mod mining;
 // mod names;
