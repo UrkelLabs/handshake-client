@@ -124,3 +124,60 @@ pub struct GetBlockHeader {
     #[serde(rename = "nextblockhash")]
     pub next_blockhash: Option<String>,
 }
+
+// --- Mempool Responses --- //
+
+/// "getmempoolinfo"
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct GetMempoolInfo {
+    pub size: u32,
+    pub bytes: u64,
+    pub usage: u64,
+    pub maxmempool: u64,
+    #[serde(rename = "mempoolminfee")]
+    pub mempool_min_fee: f64,
+}
+
+//@todo this is probably be exposed from rsd.
+/// "getmempoolentry"
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct MempoolEntry {
+    pub size: u32,
+    pub fee: f64,
+    #[serde(rename = "modifiedfee")]
+    pub modified_fee: f64,
+    pub time: u64,
+    pub height: u32,
+    //Double check if these should be floats XXX
+    #[serde(rename = "startingpriority")]
+    pub starting_priority: f64,
+    #[serde(rename = "currentpriority")]
+    pub current_priority: f64,
+    #[serde(rename = "descendantcount")]
+    pub descendant_count: u32,
+    #[serde(rename = "descendantsize")]
+    pub descendant_size: u32,
+    #[serde(rename = "descendantfees")]
+    pub descendant_fees: f64,
+    #[serde(rename = "ancestorcount")]
+    pub ancestor_count: u32,
+    #[serde(rename = "ancestorsize")]
+    pub ancestor_size: u32,
+    #[serde(rename = "ancestorfees")]
+    pub ancestor_fees: f64,
+    pub depends: Vec<String>,
+}
+
+/// "estimatesmartfee"
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct EstimateSmartFee {
+    pub fee: f64,
+    pub blocks: u32,
+}
+
+/// "estimatesmartpriority
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct EstimateSmartPriority {
+    pub priority: f64,
+    pub blocks: u32,
+}

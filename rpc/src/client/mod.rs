@@ -3,7 +3,7 @@ use rpc_json_client::RpcClient;
 
 mod block;
 mod chain;
-// mod mempool;
+mod mempool;
 // mod mining;
 // mod names;
 // mod network;

@@ -1,17 +1,19 @@
 use crate::client::HandshakeRpcClient;
-use crate::responses;
 use crate::Result;
 use serde_json::json;
+use handshake_client_types::{GetMempoolInfo, MempoolEntry, EstimateSmartFee, EstimateSmartPriority};
+use std::collections::HashMap;
 
 impl HandshakeRpcClient {
-    pub async fn get_mempool_info(&self) -> Result<responses::GetMempoolInfo> {
+    pub async fn get_mempool_info(&self) -> Result<GetMempoolInfo> {
         self.call("getmempoolinfo", &[]).await
     }
 
+    //@todo should this be txhashes?
     pub async fn get_mempool_ancestors(
         &self,
         txhash: &str,
-    ) -> Result<responses::GetMempoolAncestors> {
+    ) -> Result<Vec<String>> {
         let params = vec![json!(txhash), json!(false)];
         self.call("getmempoolancestors", &params).await
     }
@@ -19,7 +21,7 @@ impl HandshakeRpcClient {
     pub async fn get_mempool_ancestors_verbose(
         &self,
         txhash: &str,
-    ) -> Result<responses::GetMempoolAncestorsVerbose> {
+    ) -> Result<HashMap<String, MempoolEntry>> {
         let params = vec![json!(txhash), json!(true)];
         self.call("getmempoolancestors", &params).await
     }
@@ -27,7 +29,7 @@ impl HandshakeRpcClient {
     pub async fn get_mempool_descendants(
         &self,
         txhash: &str,
-    ) -> Result<responses::GetMempoolDescendants> {
+    ) -> Result<Vec<String>> {
         let params = vec![json!(txhash), json!(false)];
         self.call("getmempooldescendants", &params).await
     }
@@ -35,22 +37,22 @@ impl HandshakeRpcClient {
     pub async fn get_mempool_descendants_verbose(
         &self,
         txhash: &str,
-    ) -> Result<responses::GetMempoolDescendants> {
+    ) -> Result<Vec<MempoolEntry>> {
         let params = vec![json!(txhash), json!(true)];
         self.call("getmempooldescendants", &params).await
     }
 
-    pub async fn get_mempool_entry(&self, txhash: &str) -> Result<responses::MempoolEntry> {
+    pub async fn get_mempool_entry(&self, txhash: &str) -> Result<MempoolEntry> {
         let params = vec![json!(txhash)];
         self.call("getmempoolentry", &params).await
     }
 
-    pub async fn get_raw_mempool(&self) -> Result<responses::GetRawMempool> {
+    pub async fn get_raw_mempool(&self) -> Result<Vec<String>> {
         let params = vec![json!(false)];
         self.call("getrawmempool", &params).await
     }
 
-    pub async fn get_raw_mempool_verbose(&self) -> Result<responses::GetRawMempoolVerbose> {
+    pub async fn get_raw_mempool_verbose(&self) -> Result<HashMap<String, MempoolEntry>> {
         let params = vec![json!(true)];
         self.call("getrawmempool", &params).await
     }
@@ -60,22 +62,24 @@ impl HandshakeRpcClient {
         txhash: &str,
         priority_delta: u32,
         fee_delta: u32,
-    ) -> Result<responses::PrioritiseTransaction> {
+    ) -> Result<bool> {
         let params = vec![json!(txhash), json!(priority_delta), json!(fee_delta)];
         self.call("prioritisetransaction", &params).await
     }
 
-    pub async fn estimate_fee(&self, nblocks: u32) -> Result<responses::EstimateFee> {
+    //@todo return Amount from RSD
+    pub async fn estimate_fee(&self, nblocks: u32) -> Result<f64> {
         let params = vec![json!(nblocks)];
         self.call("estimatefee", &params).await
     }
 
-    pub async fn estimate_priority(&self, nblocks: u32) -> Result<responses::EstimatePriority> {
+    pub async fn estimate_priority(&self, nblocks: u32) -> Result<f64> {
         let params = vec![json!(nblocks)];
         self.call("estimatepriority", &params).await
     }
 
-    pub async fn estimate_smart_fee(&self, nblocks: u32) -> Result<responses::EstimateSmartFee> {
+    //@todo return Amount from RSD
+    pub async fn estimate_smart_fee(&self, nblocks: u32) -> Result<EstimateSmartFee> {
         let params = vec![json!(nblocks)];
         self.call("estimatesmartfee", &params).await
     }
@@ -83,7 +87,7 @@ impl HandshakeRpcClient {
     pub async fn estimate_smart_priority(
         &self,
         nblocks: u32,
-    ) -> Result<responses::EstimateSmartPriority> {
+    ) -> Result<EstimateSmartPriority> {
         let params = vec![json!(nblocks)];
         self.call("estimatesmartpriority", &params).await
     }
