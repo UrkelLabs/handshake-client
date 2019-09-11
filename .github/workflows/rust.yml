@@ -11,6 +11,7 @@ jobs:
         rust: [nightly]
 
     steps:
+    - uses: actions/checkout@v1
     - name: Build
-    - uses: hecrj/setup-rust-action@v1.1.0
+      uses: hecrj/setup-rust-action@v1.1.0
       run: cargo build --verbose
