@@ -1,10 +1,13 @@
 [package]
 name = "handshake-rpc"
 version = "0.1.0"
-authors = ["Handshake Alliance Team"]
+authors = ["Urkel Labs <engineering@urkel.io>"]
 edition = "2018"
 
 [dependencies]
+
+# Local
+handshake-client-types = { path="../types" }
 
 # Known External
 extended-primitives = { git="https://github.com/UrkelLabs/extended-primitives", features=["serialization"]}
