@@ -277,3 +277,113 @@ pub struct VbAvailable {}
 pub struct CoinbaseAux {
     pub flags: String,
 }
+
+// --- Network Struct --- //
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct PeerInfo {
+    pub id: u32,
+    pub addr: String,
+    #[serde(rename = "addrlocal")]
+    pub addr_local: String,
+    pub name: String,
+    pub services: String,
+    #[serde(rename = "relaytxes")]
+    pub relay_txes: bool,
+    #[serde(rename = "lastsend")]
+    pub last_send: u64,
+    #[serde(rename = "lastrecv")]
+    pub last_recv: u64,
+    #[serde(rename = "bytessent")]
+    pub bytes_sent: u64,
+    #[serde(rename = "bytesrecv")]
+    pub bytes_recv: u64,
+    #[serde(rename = "conntime")]
+    pub conn_time: u64,
+    #[serde(rename = "timeoffset")]
+    pub time_offset: u64,
+    #[serde(rename = "pingtime")]
+    pub ping_time: f64,
+    #[serde(rename = "minping")]
+    pub min_ping: u64,
+    pub version: u32,
+    #[serde(rename = "subver")]
+    pub sub_ver: String,
+    pub inbound: bool,
+    #[serde(rename = "startingheight")]
+    pub starting_height: u32,
+    #[serde(rename = "besthash")]
+    pub best_hash: String,
+    #[serde(rename = "bestheight")]
+    pub best_height: u32,
+    #[serde(rename = "banscore")]
+    pub ban_score: u32,
+    pub inflight: Vec<String>,
+    pub whitelisted: bool,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct BannedNode {
+    pub address: String,
+    pub banned_until: u64,
+    pub ban_created: u64,
+    pub ban_reason: String,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct NetworkInfo {
+    pub version: String,
+    #[serde(rename = "subversion")]
+    pub sub_version: String,
+    #[serde(rename = "protocolversion")]
+    pub protocol_version: u32,
+    #[serde(rename = "identitykey")]
+    pub identity_key: String,
+    #[serde(rename = "localservices")]
+    pub local_services: String,
+    #[serde(rename = "localrelay")]
+    pub local_relay: bool,
+    #[serde(rename = "timeoffset")]
+    pub time_offset: u64,
+    #[serde(rename = "networkactive")]
+    pub network_active: bool,
+    pub connections: u32,
+    pub networks: Vec<String>,
+    #[serde(rename = "relayfee")]
+    pub relay_fee: f64,
+    #[serde(rename = "incrementalfee")]
+    pub incremental_fee: f64,
+    #[serde(rename = "localaddresses")]
+    pub local_addresses: Vec<LocalAddress>,
+    pub warnings: String,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct LocalAddress {
+    pub address: String,
+    pub port: u32,
+    pub score: u32,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct NodeAddress {
+    pub address: String,
+    pub connected: String,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct AddedNodeInfo {
+    pub addednode: String,
+    pub connected: bool,
+    pub addresses: Vec<NodeAddress>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct NetTotals {
+    #[serde(rename = "totalbytesrecv")]
+    total_bytes_recv: u64,
+    #[serde(rename = "totalbytessent")]
+    total_bytes_sent: u64,
+    #[serde(rename = "timemillis")]
+    time_millis: u64,
+}

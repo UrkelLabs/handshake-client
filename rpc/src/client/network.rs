@@ -1,10 +1,10 @@
 use crate::client::HandshakeRpcClient;
-use crate::responses;
 use crate::Result;
 use serde_json::json;
+use handshake_client_types::{PeerInfo, BannedNode, AddedNodeInfo, NetTotals, NetworkInfo};
 
 impl HandshakeRpcClient {
-    pub async fn get_connection_count(&self) -> Result<responses::ConnectionCount> {
+    pub async fn get_connection_count(&self) -> Result<u32> {
         self.call("getconnectioncount", &[]).await
     }
 
@@ -12,13 +12,10 @@ impl HandshakeRpcClient {
         self.call("ping", &[]).await
     }
 
-    // not sure if will work but we'll see
-    pub async fn get_peer_info(&self) -> Result<Vec<responses::PeerInfo>> {
+    pub async fn get_peer_info(&self) -> Result<Vec<PeerInfo>> {
         self.call("getpeerinfo", &[]).await
     }
 
-    //Consider breaking this into multiple functions since we only have 3 acceptable cmds
-    //"add", "onetry", "remove"
     pub async fn add_node(&self, addr: &str, cmd: &str) -> Result<()> {
         let params = vec![json!(addr), json!(cmd)];
         self.call("addnode", &params).await
@@ -29,26 +26,25 @@ impl HandshakeRpcClient {
         self.call("disconnectnode", &params).await
     }
 
-    pub async fn get_added_node_info(&self, addr: &str) -> Result<responses::AddedNodeInfo> {
+    pub async fn get_added_node_info(&self, addr: &str) -> Result<AddedNodeInfo> {
         let params = vec![json!(addr)];
         self.call("getaddednodeinfo", &params).await
     }
 
-    pub async fn get_net_totals(&self) -> Result<responses::NetTotals> {
+    pub async fn get_net_totals(&self) -> Result<NetTotals> {
         self.call("getnettotals", &[]).await
     }
 
-    pub async fn get_network_info(&self) -> Result<responses::NetworkInfo> {
+    pub async fn get_network_info(&self) -> Result<NetworkInfo> {
         self.call("getnetworkinfo", &[]).await
     }
 
-    //AS with add_node this command has a set amount of cmds so consider breaking this up
     pub async fn set_ban(&self, addr: &str, cmd: &str) -> Result<()> {
         let params = vec![json!(addr), json!(cmd)];
         self.call("setban", &params).await
     }
 
-    pub async fn list_banned(&self) -> Result<Vec<responses::BannedNode>> {
+    pub async fn list_banned(&self) -> Result<Vec<BannedNode>> {
         self.call("listbanned", &[]).await
     }
 
