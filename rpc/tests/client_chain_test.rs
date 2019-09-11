@@ -38,6 +38,7 @@ async fn test_get_difficulty() {
 //async fn test_invalidate_and_reconsider_block() {
 //    let client = setup();
 
+//@todo this is now taken care of in common
 //    let hash = client.get_best_block_hash().await.unwrap().to_string();
 
 //    //We invalidate and then immediately reconsider the latest block.
