@@ -1,7 +1,7 @@
 use handshake_rpc::HandshakeRpcClient;
 
 pub fn setup() -> HandshakeRpcClient {
-    RPCClient::new("http://localhost:13037")
+    HandshakeRpcClient::new("http://localhost:13037")
 }
 
 pub fn get_txid() -> String {
