@@ -1,6 +1,13 @@
+mod block;
+mod chain;
+mod mempool;
+mod mining;
+// mod names;
+mod network;
+mod node;
+// mod tx;
 pub mod client;
 pub mod error;
-pub mod responses;
 
 pub use client::HandshakeRpcClient;
 pub use error::Error;
