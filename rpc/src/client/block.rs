@@ -1,18 +1,19 @@
 use crate::client::HandshakeRpcClient;
-use crate::responses;
 use crate::Result;
 use serde_json::json;
+use handshake_client_types::{GetBlockchainInfo, GetBlock, ChainTip, GetBlockHeader};
+use extended_primitives::Hash;
 
 impl HandshakeRpcClient {
-    pub async fn get_blockchain_info(&self) -> Result<responses::GetBlockchainInfo> {
+    pub async fn get_blockchain_info(&self) -> Result<GetBlockchainInfo> {
         self.call("getblockchaininfo", &[]).await
     }
 
-    pub async fn get_best_blockhash(&self) -> Result<responses::GetBestBlockHash> {
+    pub async fn get_best_blockhash(&self) -> Result<Hash> {
         self.call("getbestblockhash", &[]).await
     }
 
-    pub async fn get_block_count(&self) -> Result<responses::GetBlockCount> {
+    pub async fn get_block_count(&self) -> Result<u32> {
         self.call("getblockcount", &[]).await
     }
 
@@ -24,7 +25,7 @@ impl HandshakeRpcClient {
         blockhash: &str,
         verbose: bool,
         details: bool,
-    ) -> Result<responses::GetBlock> {
+    ) -> Result<GetBlock> {
         let params = vec![json!(blockhash), json!(verbose), json!(details)];
 
         self.call("getblock", &params).await
@@ -35,7 +36,7 @@ impl HandshakeRpcClient {
         blockheight: u32,
         verbose: bool,
         details: bool,
-    ) -> Result<responses::GetBlock> {
+    ) -> Result<GetBlock> {
         let params = vec![json!(blockheight), json!(verbose), json!(details)];
 
         self.call("getblockbyheight", &params).await
@@ -50,16 +51,18 @@ impl HandshakeRpcClient {
         &self,
         blockhash: &str,
         verbose: bool,
-    ) -> Result<responses::GetBlockHeader> {
+    ) -> Result<GetBlockHeader> {
         let params = vec![json!(blockhash), json!(verbose)];
         self.call("getblockheader", &params).await
+
     }
 
-    pub async fn get_chain_tips(&self) -> Result<responses::GetChainTips> {
+    pub async fn get_chain_tips(&self) -> Result<Vec<ChainTip>> {
         self.call("getchaintips", &[]).await
     }
 
-    pub async fn get_difficulty(&self) -> Result<responses::GetDifficulty> {
+    //@todo move to Handshake difficulty type.
+    pub async fn get_difficulty(&self) -> Result<f64> {
         self.call("getdifficulty", &[]).await
     }
 }

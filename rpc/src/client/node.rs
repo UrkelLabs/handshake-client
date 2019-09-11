@@ -2,10 +2,11 @@ use crate::client::HandshakeRpcClient;
 use crate::responses;
 use crate::Result;
 use serde_json::json;
+use handshake_client_types::GetInfo;
 
 impl HandshakeRpcClient {
     /// Show information about this node.
-    pub async fn get_info(&self) -> Result<responses::GetInfo> {
+    pub async fn get_info(&self) -> Result<GetInfo> {
         self.call("getinfo", &[]).await
     }
 
