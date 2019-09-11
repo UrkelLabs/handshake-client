@@ -2,15 +2,13 @@ use crate::Result;
 use rpc_json_client::RpcClient;
 
 mod block;
-mod chain;
-mod mempool;
-mod mining;
-mod names;
-mod network;
-mod node;
-mod tx;
-
-//TODO can we use runtime here, and force our own executor into hyper?
+// mod chain;
+// mod mempool;
+// mod mining;
+// mod names;
+// mod network;
+// mod node;
+// mod tx;
 
 pub struct HandshakeRpcClient {
     client: RpcClient,
@@ -25,11 +23,15 @@ impl HandshakeRpcClient {
 
     //TODO can we change params to be an Into<Value>? Then we can remove all those serde json
     //macros in all the requests.
-    async fn call<T: for<'a> serde::de::Deserialize<'a>>(
+    async fn call<T> (
         &self,
         method: &str,
         params: &[serde_json::Value],
-    ) -> Result<T> {
+    ) -> Result<T>
+        where
+        T: for<'a> serde::de::Deserialize<'a>,
+        // V: Into<serde_json::Value>
+    {
         let res = self.client.execute(method, params).await?;
 
         Ok(res)

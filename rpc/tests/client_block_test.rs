@@ -31,30 +31,38 @@ async fn test_get_block_count() {
 }
 
 #[runtime::test]
-async fn test_get_block_defaults() {
+async fn test_get_block() {
     let client = common::setup();
 
-    //TODO Future proof this test, so we aren't relying on hardcoded hashes. Grab one from the live
-    //chain
-    let hash = "e2b7b06b5d9ceab3cac26971b1cb2eded5fb668cf162c31ce883ab187287012a";
-    //TODO test all possible variations of parameters.
-    let block = client.get_block(hash, true, false).await;
+    let hash = client.get_best_block_hash().await.unwrap().to_string();
+
+    let block = client.get_block(&hash).await;
 
     assert!(block.is_ok());
 }
-//TODO implement full Transaction deserialization if details = true.
-//#[test]
-//fn test_getblock_verbose_details() {
-//    let mut client = common::setup();
 
-//    //TODO Future proof this test, so we aren't relying on hardcoded hashes. Grab one from the live
-//    //chain
-//    let hash = "88491d658a9865681ca2c86f92f0bf242c0008dc9ca90c40e5f816cb37c1d8e2".to_string();
-//        //TODO test all possible variations of parameters.
-//    let block = client.getblock(hash, true, true);
+#[runtime::test]
+async fn test_get_block_verbose() {
+    let client = common::setup();
 
-//    assert!(block.is_ok());
-//}
+    let hash = client.get_best_block_hash().await.unwrap().to_string();
+
+    let block = client.get_block_verbose(&hash, false).await;
+
+    assert!(block.is_ok());
+}
+
+//@todo failing - details not working.
+// #[runtime::test]
+// async fn test_get_block_verbose_and_details() {
+//     let client = common::setup();
+
+//     let hash = client.get_best_block_hash().await.unwrap().to_string();
+
+//     let block = client.get_block_verbose(&hash, true).await;
+
+//     assert!(block.is_ok());
+// }
 
 #[runtime::test]
 async fn test_get_block_by_height() {
@@ -62,49 +70,66 @@ async fn test_get_block_by_height() {
 
     let height = 100;
 
-    let block = client.get_block_by_height(height, true, false).await;
+    let block = client.get_block_by_height(height).await;
 
     assert!(block.is_ok());
 }
 
+#[runtime::test]
+async fn test_get_block_by_height_verbose() {
+    let client = common::setup();
+
+    let height = 100;
+
+    let block = client.get_block_by_height_verbose(height, false).await;
+
+    assert!(block.is_ok());
+}
+
+//@todo failing - details not working.
 // #[runtime::test]
-// fn test_getblockhash() {
-//     let mut client = common::setup();
+// async fn test_get_block_by_height_verbose_and_details() {
+//     let client = common::setup();
 
 //     let height = 100;
 
-//     let blockhash = client.getblockhash(height);
+//     let block = client.get_block_by_height_verbose(height, true).await;
 
-//     dbg!(&blockhash);
-
-//     assert!(blockhash.is_ok());
+//     assert!(block.is_ok());
 // }
 
 #[runtime::test]
-async fn test_getblockheader() {
+async fn test_get_block_hash() {
     let client = common::setup();
 
-    let hash = "e2b7b06b5d9ceab3cac26971b1cb2eded5fb668cf162c31ce883ab187287012a";
+    let height = 100;
 
-    let blockheader = client.get_block_header(hash, true).await;
+    let blockhash = client.get_block_hash(height).await;
+
+    assert!(blockhash.is_ok());
+}
+
+#[runtime::test]
+async fn test_get_block_header() {
+    let client = common::setup();
+
+    //@todo if we use this a lot, wrap this into common.
+    let hash = client.get_best_block_hash().await.unwrap().to_string();
+
+    let blockheader = client.get_block_header(&hash).await;
 
     assert!(blockheader.is_ok());
 }
 
 #[runtime::test]
-async fn test_chaintips() {
+async fn test_get_block_header_verbose() {
     let client = common::setup();
 
-    let tips = client.get_chain_tips().await;
+    //@todo if we use this a lot, wrap this into common.
+    let hash = client.get_best_block_hash().await.unwrap().to_string();
 
-    assert!(tips.is_ok());
+    let blockheader = client.get_block_header_verbose(&hash).await;
+
+    assert!(blockheader.is_ok());
 }
 
-#[runtime::test]
-async fn test_getdifficulty() {
-    let client = common::setup();
-
-    let difficulty = client.get_difficulty().await;
-
-    assert!(difficulty.is_ok());
-}

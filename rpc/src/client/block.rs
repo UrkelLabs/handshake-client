@@ -17,47 +17,66 @@ impl HandshakeRpcClient {
         self.call("getblockcount", &[]).await
     }
 
-    //@todo break this into multiple functions.
-    //verbose will break this.
-    //details will also break this.
+    /// get_block returns the block in Hex format.
     pub async fn get_block(
         &self,
         blockhash: &str,
-        verbose: bool,
-        details: bool,
-    ) -> Result<GetBlock> {
-        let params = vec![json!(blockhash), json!(verbose), json!(details)];
+    ) -> Result<String> {
+        let params = vec![json!(blockhash), json!(false), json!(false)];
 
         self.call("getblock", &params).await
     }
 
-    //@todo break this into multiple functions.
-    //verbose will break this.
-    //details will also break this.
+    pub async fn get_block_verbose(
+        &self,
+        blockhash: &str,
+        details: bool,
+    ) -> Result<GetBlock> {
+        let params = vec![json!(blockhash), json!(true), json!(details)];
+
+        self.call("getblock", &params).await
+    }
+
+    //Returns a hex of the block
     pub async fn get_block_by_height(
         &self,
         blockheight: u32,
-        verbose: bool,
-        details: bool,
-    ) -> Result<GetBlock> {
-        let params = vec![json!(blockheight), json!(verbose), json!(details)];
+    ) -> Result<String> {
+        let params = vec![json!(blockheight), json!(false), json!(false)];
 
         self.call("getblockbyheight", &params).await
     }
 
-    pub async fn get_block_hash(&self, blockheight: u32) -> Result<Hash> {
-        let params = vec![json!(blockheight)];
+    pub async fn get_block_by_height_verbose(
+        &self,
+        blockheight: u32,
+        details: bool,
+    ) -> Result<GetBlock> {
+        let params = vec![json!(blockheight), json!(true), json!(details)];
+
+        self.call("getblockbyheight", &params).await
+    }
+
+    pub async fn get_block_hash(&self, height: u32) -> Result<Hash> {
+        let params = vec![json!(height)];
          self.call("getblockhash", &params).await
      }
 
+    //Returns a hex of the block header
     pub async fn get_block_header(
         &self,
         blockhash: &str,
-        verbose: bool,
-    ) -> Result<GetBlockHeader> {
-        let params = vec![json!(blockhash), json!(verbose)];
+    ) -> Result<String> {
+        let params = vec![json!(blockhash), json!(false)];
         self.call("getblockheader", &params).await
 
+    }
+    pub async fn get_block_header_verbose(
+        &self,
+        blockhash: &str,
+    ) -> Result<GetBlockHeader> {
+        let params = vec![json!(blockhash), json!(true)];
+        self.call("getblockheader", &params).await
     }
 
 }
