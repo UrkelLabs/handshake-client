@@ -16,7 +16,7 @@ async fn test_get_blockchain_info() {
 async fn test_get_best_blockhash() {
     let client = common::setup();
 
-    let besthash = client.get_best_blockhash().await;
+    let besthash = client.get_best_block_hash().await;
 
     assert!(besthash.is_ok());
 }

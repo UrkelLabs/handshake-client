@@ -1,7 +1,7 @@
 use crate::client::HandshakeRpcClient;
 use crate::Result;
 use serde_json::json;
-use handshake_client_types::{GetBlockchainInfo, GetBlock, ChainTip, GetBlockHeader};
+use handshake_client_types::{GetBlockchainInfo, GetBlock, GetBlockHeader};
 use extended_primitives::Hash;
 
 impl HandshakeRpcClient {
@@ -9,7 +9,7 @@ impl HandshakeRpcClient {
         self.call("getblockchaininfo", &[]).await
     }
 
-    pub async fn get_best_blockhash(&self) -> Result<Hash> {
+    pub async fn get_best_block_hash(&self) -> Result<Hash> {
         self.call("getbestblockhash", &[]).await
     }
 
@@ -17,7 +17,7 @@ impl HandshakeRpcClient {
         self.call("getblockcount", &[]).await
     }
 
-    //TODO break this into multiple functions.
+    //@todo break this into multiple functions.
     //verbose will break this.
     //details will also break this.
     pub async fn get_block(
@@ -31,6 +31,9 @@ impl HandshakeRpcClient {
         self.call("getblock", &params).await
     }
 
+    //@todo break this into multiple functions.
+    //verbose will break this.
+    //details will also break this.
     pub async fn get_block_by_height(
         &self,
         blockheight: u32,
@@ -42,10 +45,10 @@ impl HandshakeRpcClient {
         self.call("getblockbyheight", &params).await
     }
 
-    //TODO returning strange data -> Likely bug in HSD's RPC interface. Removing until fixed
-    // pub fn getblockhash(&self, blockheight: u32) -> Result<responses::GetBlockHash, Error> {
-    //     self.call("getblockhash", &[json!(blockheight)])
-    // }
+    pub async fn get_block_hash(&self, blockheight: u32) -> Result<Hash> {
+        let params = vec![json!(blockheight)];
+         self.call("getblockhash", &params).await
+     }
 
     pub async fn get_block_header(
         &self,
@@ -57,12 +60,4 @@ impl HandshakeRpcClient {
 
     }
 
-    pub async fn get_chain_tips(&self) -> Result<Vec<ChainTip>> {
-        self.call("getchaintips", &[]).await
-    }
-
-    //@todo move to Handshake difficulty type.
-    pub async fn get_difficulty(&self) -> Result<f64> {
-        self.call("getdifficulty", &[]).await
-    }
 }
