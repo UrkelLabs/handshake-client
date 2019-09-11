@@ -7,7 +7,7 @@ mod mempool;
 mod mining;
 // mod names;
 mod network;
-// mod node;
+mod node;
 // mod tx;
 
 pub struct HandshakeRpcClient {

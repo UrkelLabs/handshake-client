@@ -1,8 +1,7 @@
 use crate::client::HandshakeRpcClient;
-use crate::responses;
 use crate::Result;
 use serde_json::json;
-use handshake_client_types::GetInfo;
+use handshake_client_types::{GetInfo, GetMemoryInfo, ValidateAddress, CreateMultiSig};
 
 impl HandshakeRpcClient {
     /// Show information about this node.
@@ -10,7 +9,7 @@ impl HandshakeRpcClient {
         self.call("getinfo", &[]).await
     }
 
-    pub async fn get_memory_info(&self) -> Result<responses::GetMemoryInfo> {
+    pub async fn get_memory_info(&self) -> Result<GetMemoryInfo> {
         self.call("getmemoryinfo", &[]).await
     }
 
@@ -21,20 +20,20 @@ impl HandshakeRpcClient {
     }
 
     /// validate an address
-    pub async fn validate_address(&self, address: &str) -> Result<responses::ValidateAddress> {
+    pub async fn validate_address(&self, address: &str) -> Result<ValidateAddress> {
         let params = vec![json!(address)];
         self.call("validateaddress", &params).await
     }
 
-    pub async fn stop(&self) -> Result<responses::Stop> {
+    pub async fn stop(&self) -> Result<String> {
         self.call("stop", &[]).await
     }
 
     pub async fn create_multisig(
         &self,
-        nrequired: &u32,
-        keys: &Vec<String>,
-    ) -> Result<responses::CreateMultiSig> {
+        nrequired: u32,
+        keys: &[&str],
+    ) -> Result<CreateMultiSig> {
         let params = vec![json!(nrequired), json!(keys)];
         self.call("createmultisig", &params).await
     }
@@ -43,7 +42,7 @@ impl HandshakeRpcClient {
         &self,
         privkey: &str,
         message: &str,
-    ) -> Result<responses::SignMessageWithPrivKey> {
+    ) -> Result<String> {
         let params = vec![json!(privkey), json!(message)];
         self.call("signmessagewithprivkey", &params).await
     }
@@ -53,12 +52,12 @@ impl HandshakeRpcClient {
         address: &str,
         signature: &str,
         message: &str,
-    ) -> Result<responses::VerifyMessage> {
+    ) -> Result<bool> {
         let params = vec![json!(address), json!(signature), json!(message)];
         self.call("verifymessage", &params).await
     }
 
-    pub async fn set_mock_time(&self, time: &u64) -> Result<()> {
+    pub async fn set_mock_time(&self, time: u64) -> Result<()> {
         let params = vec![json!(time)];
         self.call("setmocktime", &params).await
     }

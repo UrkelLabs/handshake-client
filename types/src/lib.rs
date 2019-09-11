@@ -387,3 +387,35 @@ pub struct NetTotals {
     #[serde(rename = "timemillis")]
     time_millis: u64,
 }
+
+/// "createmultisig" command
+#[derive(Debug, Clone, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CreateMultiSig {
+    pub address: String,
+    pub redeem_script: String,
+}
+
+/// "validateaddress" command
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct ValidateAddress {
+    #[serde(rename = "isvalid")]
+    pub is_valid: bool,
+    // TODO transition to hash type
+    pub address: Option<String>,
+    #[serde(rename = "ismine")]
+    pub is_mine: Option<bool>,
+    #[serde(rename = "iswatchonly")]
+    pub is_watch_only: Option<bool>,
+}
+
+/// "getmemoryinfo" command
+#[derive(Debug, Clone, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GetMemoryInfo {
+    pub total: u32,
+    pub js_heap: u32,
+    pub js_heap_total: u32,
+    pub native_heap: u32,
+    pub external: u32,
+}

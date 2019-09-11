@@ -2,46 +2,6 @@ use extended_primitives::{Buffer, Hash, Uint256};
 use serde_derive::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-/// "getmemoryinfo" command
-#[derive(Debug, Clone, Deserialize, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetMemoryInfo {
-    pub total: u32,
-    pub js_heap: u32,
-    pub js_heap_total: u32,
-    pub native_heap: u32,
-    pub external: u32,
-}
-
-/// "validateaddress" command
-#[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct ValidateAddress {
-    #[serde(rename = "isvalid")]
-    pub is_valid: bool,
-    // TODO transition to hash type
-    pub address: Option<String>,
-    #[serde(rename = "ismine")]
-    pub is_mine: Option<bool>,
-    #[serde(rename = "iswatchonly")]
-    pub is_watch_only: Option<bool>,
-}
-
-/// 'stop' command
-pub type Stop = String;
-
-/// "createmultisig" command
-#[derive(Debug, Clone, Deserialize, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct CreateMultiSig {
-    pub address: String,
-    pub redeem_script: String,
-}
-
-/// "signmessagewithprivkey" command
-pub type SignMessageWithPrivKey = String;
-
-/// "verifymessage" command
-pub type VerifyMessage = bool;
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Address {
