@@ -48,10 +48,12 @@ async fn test_get_difficulty() {
 
 //}
 
-async fn test_verify_chain() {
-    let client = setup();
+//@todo can't be run w/ pruning... See above todos
+// #[runtime::test]
+// async fn test_verify_chain() {
+//     let client = setup();
 
-    let result = client.verify_chain(0, 1).await;
+//     let result = client.verify_chain(0, 1).await;
 
-    assert!(result.is_ok());
-}
+//     assert!(result.is_ok());
+// }
