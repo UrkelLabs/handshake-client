@@ -6,6 +6,9 @@ edition = "2018"
 
 [dependencies]
 
+# Known External
+extended-primitives = { git="https://github.com/UrkelLabs/extended-primitives", features=["serialization"]}
+
 # Unknown External
 serde = "1"
 serde_derive = "1"

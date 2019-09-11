@@ -1,3 +1,4 @@
+use extended_primitives::{Buffer, Hash, Uint256};
 use serde_derive::{Deserialize, Serialize};
 
 /// "getinfo" command
@@ -180,4 +181,99 @@ pub struct EstimateSmartFee {
 pub struct EstimateSmartPriority {
     pub priority: f64,
     pub blocks: u32,
+}
+
+// --- Mining Responses --- //
+
+/// "getmininginfo" command
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct GetMiningInfo {
+    pub blocks: u32,
+    #[serde(rename = "currentblocksize")]
+    pub current_block_size: u32,
+    #[serde(rename = "currentblockweight")]
+    pub current_block_weight: u32,
+    #[serde(rename = "currentblocktx")]
+    pub currrent_block_tx: u32,
+    pub difficulty: f32,
+    pub errors: String,
+    #[serde(rename = "genproclimit")]
+    pub genproc_limit: u32,
+    #[serde(rename = "networkhashps")]
+    pub network_hashps: f32,
+    #[serde(rename = "pooledtx")]
+    pub pooled_tx: u32,
+    pub testnet: bool,
+    pub chain: String,
+    pub generate: bool,
+}
+
+/// "getwork" command
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct GetWork {
+    pub network: String,
+    pub data: String,
+    pub target: String,
+    pub height: u32,
+    pub time: u32,
+}
+
+//@todo pull this from rsd.
+/// "getblocktemplate" command
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct BlockTemplate {
+    pub capabilities: Vec<String>,
+    pub mutable: Vec<String>,
+    pub version: u32,
+    pub rules: Vec<String>,
+    //Not going to work
+    #[serde(rename = "vbavailable")]
+    pub vb_available: VbAvailable,
+    #[serde(rename = "vbrequired")]
+    pub vb_required: u32,
+    pub height: u32,
+    #[serde(rename = "previousblockhash")]
+    pub previous_blockhash: Hash,
+    #[serde(rename = "treeroot")]
+    pub tree_root: Hash,
+    #[serde(rename = "filterroot")]
+    pub filter_root: Hash,
+    #[serde(rename = "reservedroot")]
+    pub reserved_root: Hash,
+    pub target: Uint256,
+    pub bits: String,
+    #[serde(rename = "noncerange")]
+    pub nonce_range: String,
+    #[serde(rename = "curtime")]
+    pub cur_time: u64,
+    #[serde(rename = "mintime")]
+    pub min_time: u64,
+    #[serde(rename = "maxtime")]
+    pub max_time: u64,
+    pub expires: u64,
+    #[serde(rename = "sigoplimit")]
+    pub sig_op_limit: u64,
+    #[serde(rename = "sizelimit")]
+    pub size_limit: u64,
+    #[serde(rename = "weightlimit")]
+    pub weight_limit: u64,
+    #[serde(rename = "longpollid")]
+    pub long_poll_id: String,
+    #[serde(rename = "submitold")]
+    pub submit_old: bool,
+    #[serde(rename = "coinbaseaux")]
+    pub coinbase_aux: CoinbaseAux,
+    #[serde(rename = "coinbasevalue")]
+    pub coinbase_value: u64,
+    pub claims: Vec<String>,
+    pub airdrops: Vec<String>,
+    pub transactions: Vec<String>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct VbAvailable {}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct CoinbaseAux {
+    pub flags: String,
 }
