@@ -267,7 +267,19 @@ pub struct BlockTemplate {
     pub coinbase_value: u64,
     pub claims: Vec<String>,
     pub airdrops: Vec<String>,
-    pub transactions: Vec<String>,
+    pub transactions: Vec<TransactionEntry>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct TransactionEntry {
+    //@todo can we do buffer here? and deserialize from hex.
+    data: String,
+    txid: Hash,
+    hash: Hash,
+    depends: Vec<Hash>,
+    fee: u32,
+    sigops: u32,
+    weight: u32,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
