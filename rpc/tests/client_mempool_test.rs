@@ -3,7 +3,7 @@ mod common;
 use common::get_txid;
 use common::setup;
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_mempool_info() {
     let client = setup();
 
@@ -61,7 +61,7 @@ async fn test_get_mempool_info() {
 
 // }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_raw_mempool() {
     let client = common::setup();
 
@@ -70,7 +70,7 @@ async fn test_get_raw_mempool() {
     assert!(mempool.is_ok());
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_raw_mempool_verbose() {
     let client = common::setup();
 
@@ -87,7 +87,7 @@ async fn test_get_raw_mempool_verbose() {
 //     client.prioritize_transaction(&tx_hash).await.unwrap();
 // }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_estimate_fee() {
     let client = common::setup();
 
@@ -96,7 +96,7 @@ async fn test_estimate_fee() {
     assert!(fee.is_ok());
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_estimate_priority() {
     let client = common::setup();
 
@@ -105,7 +105,7 @@ async fn test_estimate_priority() {
     assert!(priority.is_ok());
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_estimate_smart_fee() {
     let client = common::setup();
 
@@ -114,7 +114,7 @@ async fn test_estimate_smart_fee() {
     assert!(smartfee.is_ok());
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_estimate_smart_priority() {
     let client = common::setup();
 

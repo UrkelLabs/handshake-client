@@ -1,9 +1,8 @@
 mod common;
 
 use common::setup;
-use runtime;
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_blockchain_info() {
     let client = setup();
 
@@ -12,7 +11,7 @@ async fn test_get_blockchain_info() {
     assert!(info.is_ok());
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_best_blockhash() {
     let client = common::setup();
 
@@ -21,7 +20,7 @@ async fn test_get_best_blockhash() {
     assert!(besthash.is_ok());
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_block_count() {
     let client = common::setup();
 
@@ -30,7 +29,7 @@ async fn test_get_block_count() {
     assert!(blockcount.is_ok());
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_block() {
     let client = common::setup();
 
@@ -41,7 +40,7 @@ async fn test_get_block() {
     assert!(block.is_ok());
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_block_verbose() {
     let client = common::setup();
 
@@ -64,7 +63,7 @@ async fn test_get_block_verbose() {
 //     assert!(block.is_ok());
 // }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_block_by_height() {
     let client = common::setup();
 
@@ -75,7 +74,7 @@ async fn test_get_block_by_height() {
     assert!(block.is_ok());
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_block_by_height_verbose() {
     let client = common::setup();
 
@@ -98,7 +97,7 @@ async fn test_get_block_by_height_verbose() {
 //     assert!(block.is_ok());
 // }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_block_hash() {
     let client = common::setup();
 
@@ -109,7 +108,7 @@ async fn test_get_block_hash() {
     assert!(blockhash.is_ok());
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_block_header() {
     let client = common::setup();
 
@@ -121,7 +120,7 @@ async fn test_get_block_header() {
     assert!(blockheader.is_ok());
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_block_header_verbose() {
     let client = common::setup();
 
