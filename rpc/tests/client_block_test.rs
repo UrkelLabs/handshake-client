@@ -131,4 +131,3 @@ async fn test_get_block_header_verbose() {
 
     assert!(blockheader.is_ok());
 }
-

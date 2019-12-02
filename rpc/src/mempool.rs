@@ -1,7 +1,9 @@
 use crate::client::HandshakeRpcClient;
 use crate::Result;
+use handshake_client_types::{
+    EstimateSmartFee, EstimateSmartPriority, GetMempoolInfo, MempoolEntry,
+};
 use serde_json::json;
-use handshake_client_types::{GetMempoolInfo, MempoolEntry, EstimateSmartFee, EstimateSmartPriority};
 use std::collections::HashMap;
 
 impl HandshakeRpcClient {
@@ -10,10 +12,7 @@ impl HandshakeRpcClient {
     }
 
     //@todo should this be txhashes?
-    pub async fn get_mempool_ancestors(
-        &self,
-        txhash: &str,
-    ) -> Result<Vec<String>> {
+    pub async fn get_mempool_ancestors(&self, txhash: &str) -> Result<Vec<String>> {
         let params = vec![json!(txhash), json!(false)];
         self.call("getmempoolancestors", &params).await
     }
@@ -26,18 +25,12 @@ impl HandshakeRpcClient {
         self.call("getmempoolancestors", &params).await
     }
 
-    pub async fn get_mempool_descendants(
-        &self,
-        txhash: &str,
-    ) -> Result<Vec<String>> {
+    pub async fn get_mempool_descendants(&self, txhash: &str) -> Result<Vec<String>> {
         let params = vec![json!(txhash), json!(false)];
         self.call("getmempooldescendants", &params).await
     }
 
-    pub async fn get_mempool_descendants_verbose(
-        &self,
-        txhash: &str,
-    ) -> Result<Vec<MempoolEntry>> {
+    pub async fn get_mempool_descendants_verbose(&self, txhash: &str) -> Result<Vec<MempoolEntry>> {
         let params = vec![json!(txhash), json!(true)];
         self.call("getmempooldescendants", &params).await
     }
@@ -84,10 +77,7 @@ impl HandshakeRpcClient {
         self.call("estimatesmartfee", &params).await
     }
 
-    pub async fn estimate_smart_priority(
-        &self,
-        nblocks: u32,
-    ) -> Result<EstimateSmartPriority> {
+    pub async fn estimate_smart_priority(&self, nblocks: u32) -> Result<EstimateSmartPriority> {
         let params = vec![json!(nblocks)];
         self.call("estimatesmartpriority", &params).await
     }

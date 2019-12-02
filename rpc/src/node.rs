@@ -1,7 +1,7 @@
 use crate::client::HandshakeRpcClient;
 use crate::Result;
+use handshake_client_types::{CreateMultiSig, GetInfo, GetMemoryInfo, ValidateAddress};
 use serde_json::json;
-use handshake_client_types::{GetInfo, GetMemoryInfo, ValidateAddress, CreateMultiSig};
 
 impl HandshakeRpcClient {
     /// Show information about this node.
@@ -29,20 +29,12 @@ impl HandshakeRpcClient {
         self.call("stop", &[]).await
     }
 
-    pub async fn create_multisig(
-        &self,
-        nrequired: u32,
-        keys: &[&str],
-    ) -> Result<CreateMultiSig> {
+    pub async fn create_multisig(&self, nrequired: u32, keys: &[&str]) -> Result<CreateMultiSig> {
         let params = vec![json!(nrequired), json!(keys)];
         self.call("createmultisig", &params).await
     }
 
-    pub async fn sign_message_with_priv_key(
-        &self,
-        privkey: &str,
-        message: &str,
-    ) -> Result<String> {
+    pub async fn sign_message_with_priv_key(&self, privkey: &str, message: &str) -> Result<String> {
         let params = vec![json!(privkey), json!(message)];
         self.call("signmessagewithprivkey", &params).await
     }

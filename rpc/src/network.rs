@@ -1,7 +1,7 @@
 use crate::client::HandshakeRpcClient;
 use crate::Result;
+use handshake_client_types::{AddedNodeInfo, BannedNode, NetTotals, NetworkInfo, PeerInfo};
 use serde_json::json;
-use handshake_client_types::{PeerInfo, BannedNode, AddedNodeInfo, NetTotals, NetworkInfo};
 
 impl HandshakeRpcClient {
     pub async fn get_connection_count(&self) -> Result<u32> {

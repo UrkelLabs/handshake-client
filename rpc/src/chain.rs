@@ -1,7 +1,7 @@
 use crate::client::HandshakeRpcClient;
 use crate::Result;
+use handshake_client_types::ChainTip;
 use serde_json::json;
-use handshake_client_types::{ChainTip};
 
 impl HandshakeRpcClient {
     pub async fn get_chain_tips(&self) -> Result<Vec<ChainTip>> {

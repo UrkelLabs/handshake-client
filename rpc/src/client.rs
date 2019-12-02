@@ -14,12 +14,8 @@ impl HandshakeRpcClient {
 
     //TODO can we change params to be an Into<Value>? Then we can remove all those serde json
     //macros in all the requests.
-    pub(crate) async fn call<T> (
-        &self,
-        method: &str,
-        params: &[serde_json::Value],
-    ) -> Result<T>
-        where
+    pub(crate) async fn call<T>(&self, method: &str, params: &[serde_json::Value]) -> Result<T>
+    where
         T: for<'a> serde::de::Deserialize<'a>,
         // V: Into<serde_json::Value>
     {
