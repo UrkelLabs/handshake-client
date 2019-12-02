@@ -1,7 +1,7 @@
 mod common;
 use common::setup;
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_info() {
     let client = setup();
 
@@ -10,7 +10,7 @@ async fn test_get_info() {
     assert!(info.is_ok());
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_memory_info() {
     let client = common::setup();
 
@@ -19,7 +19,7 @@ async fn test_get_memory_info() {
     assert!(memoryinfo.is_ok());
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_set_log_level() {
     let client = common::setup();
 
@@ -29,7 +29,7 @@ async fn test_set_log_level() {
 }
 
 
-#[runtime::test]
+#[async_std::test]
 async fn test_validate_address_ok() {
     let client = common::setup();
 
@@ -42,7 +42,7 @@ async fn test_validate_address_ok() {
     assert!(address.is_valid);
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_validate_address_fail() {
     let client = common::setup();
 
@@ -66,7 +66,7 @@ async fn test_validate_address_fail() {
 
 //// }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_create_multisig() {
     let client = common::setup();
     let pub1 = "02e3d6bb36b0261628101ee67abd89d678522dc1199912512f814e70803652f395";
@@ -81,7 +81,7 @@ async fn test_create_multisig() {
 }
 
 ////Hard to test _ok() without exposing priv keys
-#[runtime::test]
+#[async_std::test]
 async fn test_sign_message_with_priv_key_fail() {
     let client = common::setup();
 
@@ -95,7 +95,7 @@ async fn test_sign_message_with_priv_key_fail() {
 }
 
 ////TODO need valid _ok() test
-#[runtime::test]
+#[async_std::test]
 async fn test_verify_message_fail() {
     let client = common::setup();
 

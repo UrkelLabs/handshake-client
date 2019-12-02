@@ -2,7 +2,7 @@ mod common;
 
 use common::setup;
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_network_hashps() {
     let client = setup();
 
@@ -11,7 +11,7 @@ async fn test_get_network_hashps() {
     assert!(networkhashps.is_ok());
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_mining_info() {
     let client = common::setup();
 
@@ -20,7 +20,7 @@ async fn test_get_mining_info() {
     assert!(info.is_ok());
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_work() {
     let client = common::setup();
 
@@ -67,7 +67,7 @@ async fn test_get_work() {
 //     client.verify_block(&block).await.unwrap();
 // }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_set_and_get_generate() {
     let client = common::setup();
 
