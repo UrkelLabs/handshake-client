@@ -1,9 +1,8 @@
 mod common;
 
 use common::setup;
-use runtime;
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_connection_count() {
     let client = common::setup();
 
@@ -12,13 +11,12 @@ async fn test_get_connection_count() {
     assert!(connections.is_ok());
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_ping() {
     let client = common::setup();
 
     client.ping().await.unwrap();
 }
-
 
 // #[runtime::test]
 // async fn test_get_peer_info() {
@@ -48,7 +46,7 @@ async fn test_ping() {
 //    //@todo
 //}
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_net_totals() {
     let client = common::setup();
 
@@ -57,7 +55,7 @@ async fn test_get_net_totals() {
     assert!(totals.is_ok());
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_network_info() {
     let client = common::setup();
 
@@ -74,7 +72,7 @@ async fn test_get_network_info() {
 //     @todo
 // }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_list_banned() {
     let client = common::setup();
 
@@ -83,7 +81,7 @@ async fn test_list_banned() {
     assert!(names.is_ok());
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_clear_banned() {
     let client = common::setup();
 

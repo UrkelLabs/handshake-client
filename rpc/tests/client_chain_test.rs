@@ -2,7 +2,7 @@ mod common;
 
 use common::setup;
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_chain_tips() {
     let client = setup();
 
@@ -11,7 +11,7 @@ async fn test_get_chain_tips() {
     assert!(result.is_ok());
 }
 
-#[runtime::test]
+#[async_std::test]
 async fn test_get_difficulty() {
     let client = setup();
 
