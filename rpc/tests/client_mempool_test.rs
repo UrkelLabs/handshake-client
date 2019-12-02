@@ -1,7 +1,7 @@
 mod common;
 
-use common::setup;
 use common::get_txid;
+use common::setup;
 
 #[runtime::test]
 async fn test_get_mempool_info() {

@@ -19,7 +19,6 @@ async fn test_ping() {
     client.ping().await.unwrap();
 }
 
-
 // #[runtime::test]
 // async fn test_get_peer_info() {
 //     let client = common::setup();

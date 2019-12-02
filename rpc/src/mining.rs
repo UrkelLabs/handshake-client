@@ -1,15 +1,11 @@
 use crate::client::HandshakeRpcClient;
 use crate::Result;
+use handshake_client_types::{BlockTemplate, GetMiningInfo, GetWork};
 use serde_json::json;
-use handshake_client_types::{GetMiningInfo, GetWork, BlockTemplate};
 
 impl HandshakeRpcClient {
     /// Get network hash per second
-    pub async fn get_network_hashps(
-        &self,
-        blocks: u32,
-        height: u32,
-    ) -> Result<f32> {
+    pub async fn get_network_hashps(&self, blocks: u32, height: u32) -> Result<f32> {
         let params = vec![json!(blocks), json!(height)];
         self.call("getnetworkhashps", &params).await
     }
@@ -53,7 +49,6 @@ impl HandshakeRpcClient {
         let params = vec![json!(block_data)];
         self.call("verifyblock", &params).await
     }
-
 
     //@todo prolimit appears to not be used at all in hsd from this call. Open up an
     //issue/investigate further.
