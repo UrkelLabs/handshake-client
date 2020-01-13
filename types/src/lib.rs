@@ -70,10 +70,9 @@ pub struct GetBlock {
     pub witness_root: String,
     #[serde(rename = "treeroot")]
     pub tree_root: String,
-    #[serde(rename = "filterroot")]
-    pub filter_root: String,
     #[serde(rename = "reservedroot")]
     pub reserved_root: String,
+    pub mask: String,
     pub coinbase: Vec<String>,
     pub tx: Vec<String>,
     pub time: u64,
@@ -111,10 +110,9 @@ pub struct GetBlockHeader {
     pub witness_root: String,
     #[serde(rename = "treeroot")]
     pub tree_root: String,
-    #[serde(rename = "filterroot")]
-    pub filter_root: String,
     #[serde(rename = "reservedroot")]
     pub reserved_root: String,
+    pub mask: String,
     pub time: u64,
     pub mediantime: u64,
     pub bits: u64,
@@ -236,8 +234,7 @@ pub struct BlockTemplate {
     pub previous_blockhash: Hash,
     #[serde(rename = "treeroot")]
     pub tree_root: Hash,
-    #[serde(rename = "filterroot")]
-    pub filter_root: Hash,
+    pub mask: Hash,
     #[serde(rename = "reservedroot")]
     pub reserved_root: Hash,
     pub target: Uint256,

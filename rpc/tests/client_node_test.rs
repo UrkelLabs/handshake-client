@@ -28,20 +28,20 @@ async fn test_set_log_level() {
     assert!(result.is_ok());
 }
 
-#[async_std::test]
-async fn test_validate_address_ok() {
-    let client = common::setup();
+// #[async_std::test]
+// async fn test_validate_address_ok() {
+//     let client = common::setup();
 
-    let validateaddress = client
-        .validate_address("ts1qq79hzunlkj50fvm7rxg3xetx4kml4e0am43htk")
-        .await;
+//     let validateaddress = client
+//         .validate_address("ts1qq79hzunlkj50fvm7rxg3xetx4kml4e0am43htk")
+//         .await;
 
-    assert!(validateaddress.is_ok());
+//     assert!(validateaddress.is_ok());
 
-    let address = validateaddress.unwrap();
+//     let address = validateaddress.unwrap();
 
-    assert!(address.is_valid);
-}
+//     assert!(address.is_valid);
+// }
 
 #[async_std::test]
 async fn test_validate_address_fail() {

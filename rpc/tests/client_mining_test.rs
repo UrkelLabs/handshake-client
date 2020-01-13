@@ -40,14 +40,14 @@ async fn test_get_work() {
 //     assert!(work.is_ok());
 // }
 
-// #[test]
-// fn test_getblocktemplate() {
-//     let client = common::setup();
+#[async_std::test]
+async fn test_getblocktemplate() {
+    let client = common::setup();
 
-//     let template = client.get_block_template();
+    let template = client.get_block_template().await;
 
-//     assert!(template.is_ok());
-// }
+    assert!(template.is_ok());
+}
 
 // #[runtime::test]
 // async fn test_submit_block() {
