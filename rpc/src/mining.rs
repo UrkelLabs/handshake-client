@@ -1,6 +1,7 @@
 use crate::client::HandshakeRpcClient;
 use crate::Result;
-use handshake_client_types::{BlockTemplate, GetMiningInfo, GetWork};
+use handshake_client_types::{GetMiningInfo, GetWork};
+use handshake_primitives::block_template::json::BlockTemplateJSON;
 use serde_json::json;
 
 impl HandshakeRpcClient {
@@ -35,7 +36,7 @@ impl HandshakeRpcClient {
     pub async fn get_block_template(
         &self,
         // json_request_object: &serde_json::Value,
-    ) -> Result<BlockTemplate> {
+    ) -> Result<BlockTemplateJSON> {
         let params = vec![json!({})];
         self.call("getblocktemplate", &params).await
     }

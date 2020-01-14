@@ -12,6 +12,7 @@ handshake-client-types = { path="../types" }
 # Known External
 extended-primitives = { git="https://github.com/UrkelLabs/extended-primitives", features=["serialization"]}
 rpc-json-client = { git= "https://github.com/UrkelLabs/rpc"}
+handshake-primitives = { git="https://github.com/UrkelLabs/rsd"}
 
 # Unknown External
 serde = "1"
