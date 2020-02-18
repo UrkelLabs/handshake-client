@@ -1,7 +1,7 @@
 use handshake_rpc::HandshakeRpcClient;
 
 pub fn setup() -> HandshakeRpcClient {
-    HandshakeRpcClient::new("http://localhost:15037")
+    HandshakeRpcClient::new("http://localhost:14037")
 }
 
 //@todo make this global, so we only do once.

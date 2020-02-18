@@ -1,0 +1,25 @@
+[package]
+name = "handshake-wallet-rpc"
+version = "0.1.0"
+authors = ["kilpatty <seanpkilgarriff@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# Local
+handshake-client-types = { path="../types" }
+
+# Known External
+extended-primitives = { git="https://github.com/UrkelLabs/extended-primitives", features=["serialization"]}
+rpc-json-client = { git= "https://github.com/UrkelLabs/rpc"}
+handshake-primitives = { git="https://github.com/UrkelLabs/rsd"}
+
+# Unknown External
+serde = "1"
+serde_derive = "1"
+serde_json = "1"
+futures = "0.3.1"
+
+[dev-dependencies]
+async-std = { version = "1.2.0", features = ["attributes"] }

@@ -1,4 +1,4 @@
-use extended_primitives::{Buffer, Hash, Uint256};
+// use extended_primitives::{Buffer, Hash, Uint256};
 use serde_derive::{Deserialize, Serialize};
 
 /// "getinfo" command
