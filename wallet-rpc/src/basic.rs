@@ -11,6 +11,10 @@ impl HandshakeWalletRpcClient {
         self.call("getbalance", &[json!(account)]).await
     }
 
+    pub async fn get_address_by_account(&self, account: &str) -> Result<String> {
+        self.call("getaccountaddress", &[json!(account)]).await
+    }
+
     ///Send Handshake to a specific address. Important to note that amount
     ///is notated in HNS whole units, not doos. amount = 1 = 1 HNS
     pub async fn send_to_address(&self, address: String, amount: f64) -> Result<String> {
