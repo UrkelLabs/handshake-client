@@ -11,8 +11,8 @@ impl HandshakeWalletRpcClient {
         self.call("getbalance", &[json!(account)]).await
     }
 
-    pub async fn get_unconfirmed_balance(&self, account: Option<String>) -> Result<f64> {
-        self.call("getunconfirmedbalance", &[json!(account)]).await
+    pub async fn get_unconfirmed_balance(&self) -> Result<f64> {
+        self.call("getunconfirmedbalance", &[]).await
     }
 
     pub async fn get_address_by_account(&self, account: &str) -> Result<String> {
