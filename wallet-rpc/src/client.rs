@@ -1,14 +1,16 @@
 use crate::Result;
 use rpc_json_client::RpcClient;
+use std::sync::Arc;
 
+#[derive(Clone)]
 pub struct HandshakeWalletRpcClient {
-    client: RpcClient,
+    client: Arc<RpcClient>,
 }
 
 impl HandshakeWalletRpcClient {
     pub fn new(uri: &str) -> Self {
         HandshakeWalletRpcClient {
-            client: RpcClient::new(uri),
+            client: Arc::new(RpcClient::new(uri)),
         }
     }
 
