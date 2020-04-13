@@ -8,6 +8,8 @@ edition = "2018"
 
 # Known External
 extended-primitives = { git="https://github.com/UrkelLabs/extended-primitives", features=["serialization"]}
+handshake-primitives = { git="https://github.com/UrkelLabs/rsd", features=["json"]}
+handshake-types = { git="https://github.com/UrkelLabs/rsd", features=["json"]}
 
 # Unknown External
 serde = "1"

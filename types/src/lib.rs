@@ -1,5 +1,8 @@
 // use extended_primitives::{Buffer, Hash, Uint256};
+use extended_primitives::Hash;
+use handshake_primitives::{Address, Covenant};
 use serde_derive::{Deserialize, Serialize};
+use handshake_types::Compact;
 
 /// "getinfo" command
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -77,13 +80,84 @@ pub struct GetBlock {
     pub tx: Vec<String>,
     pub time: u64,
     pub mediantime: u64,
-    pub bits: u64,
+    pub bits: Compact,
     pub difficulty: f64,
     pub chainwork: String,
     #[serde(rename = "previousblockhash")]
     pub previous_blockhash: String,
     #[serde(rename = "nextblockhash")]
     pub next_blockhash: Option<String>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct GetBlockDetailed {
+    pub hash: String,
+    pub confirmations: u32,
+    #[serde(rename = "strippedsize")]
+    pub stripped_size: u32,
+    pub size: u32,
+    pub weight: u32,
+    pub height: u32,
+    pub version: u32,
+    #[serde(rename = "versionHex")]
+    pub verion_hex: String,
+    #[serde(rename = "merkleroot")]
+    pub merkle_root: String,
+    #[serde(rename = "witnessroot")]
+    pub witness_root: String,
+    #[serde(rename = "treeroot")]
+    pub tree_root: String,
+    #[serde(rename = "reservedroot")]
+    pub reserved_root: String,
+    pub mask: String,
+    pub tx: Vec<Transaction>,
+    pub time: u64,
+    pub mediantime: u64,
+    pub bits: Compact,
+    pub difficulty: f64,
+    pub chainwork: String,
+    #[serde(rename = "previousblockhash")]
+    pub previous_blockhash: String,
+    #[serde(rename = "nextblockhash")]
+    pub next_blockhash: Option<String>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct Transaction {
+    pub txid: Hash,
+    pub hash: Hash,
+    pub size: u32,
+    pub vsize: u32,
+    pub version: u32,
+    pub locktime: u32,
+    pub vin: Vec<VirtualInput>,
+    pub vout: Vec<VirtualOutput>,
+    pub blockhash: Option<Hash>,
+    pub confirmations: u32,
+    pub time: u64,
+    pub blocktime: u64,
+    pub hex: Option<String>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct VirtualInput {
+    pub coinbase: bool,
+    pub txid: Hash,
+    pub vout: usize,
+    pub txinwitness: Vec<String>,
+    pub sequence: u32,
+    pub link: Option<u32>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct VirtualOutput {
+    #[serde(skip)]
+    pub value: u64,
+    #[serde(skip)]
+    pub n: usize,
+    #[serde(skip)]
+    pub address: Address,
+    pub covenant: Covenant,
 }
 
 /// "getchaintips"
@@ -115,7 +189,7 @@ pub struct GetBlockHeader {
     pub mask: String,
     pub time: u64,
     pub mediantime: u64,
-    pub bits: u64,
+    pub bits: Compact,
     pub difficulty: f64,
     pub chainwork: String,
     #[serde(rename = "previousblockhash")]
