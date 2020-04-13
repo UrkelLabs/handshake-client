@@ -55,7 +55,7 @@ async fn test_getblocktemplate() {
         .with_json(template.unwrap())
         //@todo would be great to have this function accept T: Into<Address>
         .with_address(
-            "rs1q80ecwmq0395fp7xwr4wyjkv02jzs5w5y7ynruj"
+            "hs1qjhgt8dwvhwapf2a5v9865nmrrqhhqlz38w3zze"
                 .parse()
                 .unwrap(),
         )

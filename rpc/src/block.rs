@@ -1,7 +1,7 @@
 use crate::client::HandshakeRpcClient;
 use crate::Result;
 use extended_primitives::Hash;
-use handshake_client_types::{GetBlock, GetBlockHeader, GetBlockchainInfo};
+use handshake_client_types::{GetBlock, GetBlockDetailed, GetBlockHeader, GetBlockchainInfo};
 use serde_json::json;
 
 impl HandshakeRpcClient {
@@ -24,8 +24,14 @@ impl HandshakeRpcClient {
         self.call("getblock", &params).await
     }
 
-    pub async fn get_block_verbose(&self, blockhash: &str, details: bool) -> Result<GetBlock> {
-        let params = vec![json!(blockhash), json!(true), json!(details)];
+    pub async fn get_block_verbose(&self, blockhash: &str) -> Result<GetBlock> {
+        let params = vec![json!(blockhash), json!(true), json!(false)];
+
+        self.call("getblock", &params).await
+    }
+
+    pub async fn get_block_detailed(&self, blockhash: &str) -> Result<GetBlockDetailed> {
+        let params = vec![json!(blockhash), json!(true), json!(true)];
 
         self.call("getblock", &params).await
     }
@@ -37,12 +43,14 @@ impl HandshakeRpcClient {
         self.call("getblockbyheight", &params).await
     }
 
-    pub async fn get_block_by_height_verbose(
-        &self,
-        blockheight: u32,
-        details: bool,
-    ) -> Result<GetBlock> {
-        let params = vec![json!(blockheight), json!(true), json!(details)];
+    pub async fn get_block_by_height_verbose(&self, blockheight: u32) -> Result<GetBlock> {
+        let params = vec![json!(blockheight), json!(true), json!(false)];
+
+        self.call("getblockbyheight", &params).await
+    }
+
+    pub async fn get_block_by_height_detailed(&self, blockheight: u32) -> Result<GetBlockDetailed> {
+        let params = vec![json!(blockheight), json!(true), json!(true)];
 
         self.call("getblockbyheight", &params).await
     }

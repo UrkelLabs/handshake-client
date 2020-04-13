@@ -1,17 +1,14 @@
 use handshake_rpc::HandshakeRpcClient;
 
 pub fn setup() -> HandshakeRpcClient {
-    HandshakeRpcClient::new("http://localhost:14037")
+    HandshakeRpcClient::new("http://127.0.0.1:12037")
 }
 
 //@todo make this global, so we only do once.
 pub async fn get_txid(client: &HandshakeRpcClient) -> String {
     let tip = client.get_block_count().await.unwrap();
 
-    let block = client
-        .get_block_by_height_verbose(tip, false)
-        .await
-        .unwrap();
+    let block = client.get_block_by_height_verbose(tip).await.unwrap();
 
     block.tx[0].clone()
 }

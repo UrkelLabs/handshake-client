@@ -46,22 +46,22 @@ async fn test_get_block_verbose() {
 
     let hash = client.get_best_block_hash().await.unwrap().to_string();
 
-    let block = client.get_block_verbose(&hash, false).await;
+    let block = client.get_block_verbose(&hash).await;
 
     assert!(block.is_ok());
 }
 
 //@todo failing - details not working.
-// #[runtime::test]
-// async fn test_get_block_verbose_and_details() {
-//     let client = common::setup();
+#[async_std::test]
+async fn test_get_block_verbose_and_details() {
+    let client = common::setup();
 
-//     let hash = client.get_best_block_hash().await.unwrap().to_string();
+    let hash = client.get_best_block_hash().await.unwrap().to_string();
 
-//     let block = client.get_block_verbose(&hash, true).await;
+    let block = client.get_block_detailed(&hash).await;
 
-//     assert!(block.is_ok());
-// }
+    assert!(block.is_ok());
+}
 
 #[async_std::test]
 async fn test_get_block_by_height() {
@@ -71,6 +71,8 @@ async fn test_get_block_by_height() {
 
     let block = client.get_block_by_height(height).await;
 
+    dbg!(&block);
+
     assert!(block.is_ok());
 }
 
@@ -78,24 +80,27 @@ async fn test_get_block_by_height() {
 async fn test_get_block_by_height_verbose() {
     let client = common::setup();
 
-    let height = 100;
+    let height = 7760;
 
-    let block = client.get_block_by_height_verbose(height, false).await;
+    let block = client.get_block_by_height_verbose(height).await;
+
+    dbg!(&block);
 
     assert!(block.is_ok());
 }
 
-//@todo failing - details not working.
-// #[runtime::test]
-// async fn test_get_block_by_height_verbose_and_details() {
-//     let client = common::setup();
+#[async_std::test]
+async fn test_get_block_by_height_verbose_and_details() {
+    let client = common::setup();
 
-//     let height = 100;
+    let height = 7760;
 
-//     let block = client.get_block_by_height_verbose(height, true).await;
+    let block = client.get_block_by_height_detailed(height).await;
 
-//     assert!(block.is_ok());
-// }
+    dbg!(&block);
+
+    assert!(block.is_ok());
+}
 
 #[async_std::test]
 async fn test_get_block_hash() {
