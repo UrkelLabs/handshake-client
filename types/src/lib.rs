@@ -1,5 +1,5 @@
 // use extended_primitives::{Buffer, Hash, Uint256};
-use extended_primitives::Hash;
+use extended_primitives::{Buffer, Hash};
 use handshake_primitives::{Address, Covenant};
 use handshake_types::Compact;
 use serde_derive::{Deserialize, Serialize};
