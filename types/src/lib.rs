@@ -1,8 +1,8 @@
 // use extended_primitives::{Buffer, Hash, Uint256};
 use extended_primitives::Hash;
 use handshake_primitives::{Address, Covenant};
-use serde_derive::{Deserialize, Serialize};
 use handshake_types::Compact;
+use serde_derive::{Deserialize, Serialize};
 
 /// "getinfo" command
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -57,7 +57,7 @@ pub struct GetBlockchainInfo {
 /// "getblock" and "getblockbyheight"
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct GetBlock {
-    pub hash: String,
+    pub hash: Hash,
     pub confirmations: u32,
     #[serde(rename = "strippedsize")]
     pub stripped_size: u32,
@@ -68,14 +68,14 @@ pub struct GetBlock {
     #[serde(rename = "versionHex")]
     pub verion_hex: String,
     #[serde(rename = "merkleroot")]
-    pub merkle_root: String,
+    pub merkle_root: Hash,
     #[serde(rename = "witnessroot")]
-    pub witness_root: String,
+    pub witness_root: Hash,
     #[serde(rename = "treeroot")]
-    pub tree_root: String,
+    pub tree_root: Hash,
     #[serde(rename = "reservedroot")]
-    pub reserved_root: String,
-    pub mask: String,
+    pub reserved_root: Hash,
+    pub mask: Hash,
     pub coinbase: Vec<String>,
     pub tx: Vec<String>,
     pub time: u64,
@@ -84,9 +84,9 @@ pub struct GetBlock {
     pub difficulty: f64,
     pub chainwork: String,
     #[serde(rename = "previousblockhash")]
-    pub previous_blockhash: Option<String>,
+    pub previous_blockhash: Option<Hash>,
     #[serde(rename = "nextblockhash")]
-    pub next_blockhash: Option<String>,
+    pub next_blockhash: Option<Hash>,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
