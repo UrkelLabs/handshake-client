@@ -91,35 +91,36 @@ pub struct GetBlock {
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct GetBlockDetailed {
-    pub hash: String,
+    pub hash: Hash,
     pub confirmations: u32,
     #[serde(rename = "strippedsize")]
-    pub stripped_size: u32,
-    pub size: u32,
-    pub weight: u32,
+    pub stripped_size: u64,
+    pub size: u64,
+    pub weight: u64,
     pub height: u32,
     pub version: u32,
     #[serde(rename = "versionHex")]
-    pub verion_hex: String,
+    pub verion_hex: Buffer,
     #[serde(rename = "merkleroot")]
-    pub merkle_root: String,
+    pub merkle_root: Hash,
     #[serde(rename = "witnessroot")]
-    pub witness_root: String,
+    pub witness_root: Hash,
     #[serde(rename = "treeroot")]
-    pub tree_root: String,
+    pub tree_root: Hash,
     #[serde(rename = "reservedroot")]
-    pub reserved_root: String,
-    pub mask: String,
+    pub reserved_root: Hash,
+    pub mask: Hash,
     pub tx: Vec<Transaction>,
     pub time: u64,
     pub mediantime: u64,
+    pub nonce: u32,
     pub bits: Compact,
     pub difficulty: f64,
     pub chainwork: String,
     #[serde(rename = "previousblockhash")]
-    pub previous_blockhash: String,
+    pub previous_blockhash: Option<Hash>,
     #[serde(rename = "nextblockhash")]
-    pub next_blockhash: Option<String>,
+    pub next_blockhash: Option<Hash>,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
