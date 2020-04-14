@@ -84,7 +84,7 @@ pub struct GetBlock {
     pub difficulty: f64,
     pub chainwork: String,
     #[serde(rename = "previousblockhash")]
-    pub previous_blockhash: String,
+    pub previous_blockhash: Option<String>,
     #[serde(rename = "nextblockhash")]
     pub next_blockhash: Option<String>,
 }
