@@ -80,6 +80,9 @@ pub struct GetBlock {
     pub tx: Vec<String>,
     pub time: u64,
     pub mediantime: u64,
+    pub nonce: u32,
+    #[serde(rename = "extranonce")]
+    pub extra_nonce: Buffer,
     pub bits: Compact,
     pub difficulty: f64,
     pub chainwork: String,
@@ -114,6 +117,8 @@ pub struct GetBlockDetailed {
     pub time: u64,
     pub mediantime: u64,
     pub nonce: u32,
+    #[serde(rename = "extranonce")]
+    pub extra_nonce: Buffer,
     pub bits: Compact,
     pub difficulty: f64,
     pub chainwork: String,
