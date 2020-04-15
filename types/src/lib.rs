@@ -78,6 +78,8 @@ pub struct GetBlock {
     pub mask: Hash,
     pub coinbase: Vec<String>,
     pub tx: Vec<String>,
+    #[serde(rename = "nTx")]
+    pub num_tx: u32,
     pub time: u64,
     pub mediantime: u64,
     pub nonce: u32,
@@ -114,6 +116,8 @@ pub struct GetBlockDetailed {
     pub reserved_root: Hash,
     pub mask: Hash,
     pub tx: Vec<Transaction>,
+    #[serde(rename = "nTx")]
+    pub num_tx: u32,
     pub time: u64,
     pub mediantime: u64,
     pub nonce: u32,
