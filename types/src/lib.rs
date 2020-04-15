@@ -157,11 +157,8 @@ pub struct VirtualInput {
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct VirtualOutput {
-    #[serde(skip)]
     pub value: u64,
-    #[serde(skip)]
     pub n: usize,
-    #[serde(skip)]
     pub address: Address,
     pub covenant: Covenant,
 }
