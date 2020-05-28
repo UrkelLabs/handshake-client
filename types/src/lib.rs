@@ -308,7 +308,7 @@ pub struct PeerInfo {
     pub addr: String,
     #[serde(rename = "addrlocal")]
     pub addr_local: String,
-    pub name: String,
+    pub name: Option<String>,
     pub services: String,
     #[serde(rename = "relaytxes")]
     pub relay_txes: bool,
@@ -327,7 +327,7 @@ pub struct PeerInfo {
     #[serde(rename = "pingtime")]
     pub ping_time: f64,
     #[serde(rename = "minping")]
-    pub min_ping: u64,
+    pub min_ping: f64,
     pub version: u32,
     #[serde(rename = "subver")]
     pub sub_ver: String,

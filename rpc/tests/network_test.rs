@@ -18,15 +18,16 @@ async fn test_ping() {
     client.ping().await.unwrap();
 }
 
-// #[runtime::test]
-// async fn test_get_peer_info() {
-//     let client = common::setup();
+#[async_std::test]
+async fn test_get_peer_info() {
+    let client = common::setup();
 
-//     let peers = client.get_peer_info().await;
-//     @todo the conversion to peer info fails, should be fixed in rsd.
+    let peers = client.get_peer_info().await;
 
-//     assert!(peers.is_ok());
-// }
+    dbg!(&peers);
+
+    assert!(peers.is_ok());
+}
 
 // #[runtime::test]
 // async fn test_add_node() {
