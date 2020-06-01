@@ -314,17 +314,17 @@ pub struct PeerInfo {
     #[serde(rename = "relaytxes")]
     pub relay_txes: bool,
     #[serde(rename = "lastsend")]
-    pub last_send: u64,
+    pub last_send: i64,
     #[serde(rename = "lastrecv")]
-    pub last_recv: u64,
+    pub last_recv: i64,
     #[serde(rename = "bytessent")]
-    pub bytes_sent: u64,
+    pub bytes_sent: i64,
     #[serde(rename = "bytesrecv")]
-    pub bytes_recv: u64,
+    pub bytes_recv: i64,
     #[serde(rename = "conntime")]
-    pub conn_time: u64,
+    pub conn_time: i64,
     #[serde(rename = "timeoffset")]
-    pub time_offset: u64,
+    pub time_offset: i64,
     #[serde(rename = "pingtime")]
     pub ping_time: f64,
     #[serde(rename = "minping")]
@@ -334,13 +334,13 @@ pub struct PeerInfo {
     pub sub_ver: String,
     pub inbound: bool,
     #[serde(rename = "startingheight")]
-    pub starting_height: u32,
+    pub starting_height: i32,
     #[serde(rename = "besthash")]
     pub best_hash: String,
     #[serde(rename = "bestheight")]
-    pub best_height: u32,
+    pub best_height: i32,
     #[serde(rename = "banscore")]
-    pub ban_score: u32,
+    pub ban_score: i32,
     pub inflight: Vec<String>,
     pub whitelisted: bool,
 }
