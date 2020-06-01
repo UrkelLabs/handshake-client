@@ -149,6 +149,7 @@ pub struct Transaction {
     pub hex: Option<String>,
 }
 
+//@todo txid and vout will be Prevout.
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct VirtualInput {
     pub coinbase: bool,
@@ -403,11 +404,11 @@ pub struct AddedNodeInfo {
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct NetTotals {
     #[serde(rename = "totalbytesrecv")]
-    total_bytes_recv: u64,
+    pub total_bytes_recv: u64,
     #[serde(rename = "totalbytessent")]
-    total_bytes_sent: u64,
+    pub total_bytes_sent: u64,
     #[serde(rename = "timemillis")]
-    time_millis: u64,
+    pub time_millis: u64,
 }
 
 /// "createmultisig" command
