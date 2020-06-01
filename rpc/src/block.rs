@@ -18,10 +18,21 @@ impl HandshakeRpcClient {
     }
 
     /// get_block returns the block in Hex format.
+    //@todo this should probably be a different type. Hash maybe.
     pub async fn get_block(&self, blockhash: &str) -> Result<String> {
         let params = vec![json!(blockhash), json!(false), json!(false)];
 
         self.call("getblock", &params).await
+    }
+
+    //@todo this should probably be a different type. Hash?
+    pub async fn get_blocks(&self, blockhashes: &[String]) -> Result<Vec<String>> {
+        let mut params_set = Vec::new();
+        for hash in blockhashes {
+            params_set.push(vec![json!(hash), json!(false), json!(false)]);
+        }
+
+        self.batch("getblock", &params_set).await
     }
 
     pub async fn get_block_verbose(&self, blockhash: &str) -> Result<GetBlock> {
@@ -30,10 +41,33 @@ impl HandshakeRpcClient {
         self.call("getblock", &params).await
     }
 
+    //Batch
+    pub async fn get_blocks_verbose(&self, blockhashes: &[String]) -> Result<Vec<GetBlock>> {
+        let mut params_set = Vec::new();
+        for hash in blockhashes {
+            params_set.push(vec![json!(hash), json!(true), json!(false)]);
+        }
+
+        self.batch("getblock", &params_set).await
+    }
+
     pub async fn get_block_detailed(&self, blockhash: &str) -> Result<GetBlockDetailed> {
         let params = vec![json!(blockhash), json!(true), json!(true)];
 
         self.call("getblock", &params).await
+    }
+
+    //Batch
+    pub async fn get_blocks_detailed(
+        &self,
+        blockhashes: &[String],
+    ) -> Result<Vec<GetBlockDetailed>> {
+        let mut params_set = Vec::new();
+        for hash in blockhashes {
+            params_set.push(vec![json!(hash), json!(true), json!(true)]);
+        }
+
+        self.batch("getblock", &params_set).await
     }
 
     //Returns a hex of the block

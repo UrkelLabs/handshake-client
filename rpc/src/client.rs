@@ -1,4 +1,5 @@
 use crate::Result;
+use futures::future::try_join_all;
 use rpc_json_client::{ClientBuilder, RpcClient};
 use std::sync::Arc;
 
@@ -26,5 +27,22 @@ impl HandshakeRpcClient {
         let res = self.client.execute(method, params).await?;
 
         Ok(res)
+    }
+
+    pub(crate) async fn batch<T>(
+        &self,
+        method: &str,
+        params_set: &[Vec<serde_json::Value>],
+    ) -> Result<Vec<T>>
+    where
+        T: for<'a> serde::de::Deserialize<'a>,
+        // V: Into<serde_json::Value>
+    {
+        let mut requests = Vec::new();
+        for params in params_set {
+            requests.push(self.client.execute(method, params));
+        }
+
+        Ok(try_join_all(requests).await?)
     }
 }
