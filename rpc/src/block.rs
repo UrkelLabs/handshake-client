@@ -78,7 +78,7 @@ impl HandshakeRpcClient {
     }
 
     //Batch
-    pub async fn get_blocks_by_height(&self, blockheights: Vec<u32>) -> Result<Vec<String>> {
+    pub async fn get_blocks_by_height(&self, blockheights: &[u32]) -> Result<Vec<String>> {
         let mut params_set = Vec::new();
         for height in blockheights {
             params_set.push(vec![json!(height), json!(false), json!(false)]);
@@ -96,7 +96,7 @@ impl HandshakeRpcClient {
     //Batch
     pub async fn get_blocks_by_height_verbose(
         &self,
-        blockheights: Vec<u32>,
+        blockheights: &[u32],
     ) -> Result<Vec<GetBlock>> {
         let mut params_set = Vec::new();
         for height in blockheights {
@@ -115,7 +115,7 @@ impl HandshakeRpcClient {
     //Batch
     pub async fn get_blocks_by_height_detailed(
         &self,
-        blockheights: Vec<u32>,
+        blockheights: &[u32],
     ) -> Result<Vec<GetBlockDetailed>> {
         let mut params_set = Vec::new();
         for height in blockheights {
