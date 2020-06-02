@@ -60,7 +60,9 @@ async fn test_get_block_verbose_and_details() {
 
     let block = client.get_block_detailed(&hash).await;
 
-    assert!(block.is_ok());
+    dbg!(&block.unwrap().tx[0].vin);
+
+    // assert!(block.is_ok());
 }
 
 #[async_std::test]

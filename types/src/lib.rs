@@ -1,7 +1,7 @@
 // use extended_primitives::{Buffer, Hash, Uint256};
 use extended_primitives::{Buffer, Hash};
 use handshake_primitives::{Address, Covenant};
-use handshake_types::Compact;
+use handshake_types::{Amount, Compact};
 use serde_derive::{Deserialize, Serialize};
 
 /// "getinfo" command
@@ -12,7 +12,7 @@ pub struct GetInfo {
     pub protocol_version: u32,
     #[serde(rename = "walletversion")]
     pub wallet_version: u32,
-    pub balance: u64,
+    pub balance: Amount,
     pub blocks: u64,
     pub timeoffset: i64,
     pub connections: u32,
@@ -25,9 +25,9 @@ pub struct GetInfo {
     pub key_pool_size: u32,
     pub unlocked_until: u32,
     #[serde(rename = "paytxfee")]
-    pub pay_tx_fee: f64,
+    pub pay_tx_fee: Amount,
     #[serde(rename = "relayfee")]
-    pub relay_fee: f64,
+    pub relay_fee: Amount,
     pub errors: String,
 }
 
@@ -162,7 +162,7 @@ pub struct VirtualInput {
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct VirtualOutput {
-    pub value: f64,
+    pub value: Amount,
     pub n: usize,
     pub address: Address,
     pub covenant: Covenant,
@@ -219,7 +219,7 @@ pub struct GetMempoolInfo {
     pub usage: u64,
     pub maxmempool: u64,
     #[serde(rename = "mempoolminfee")]
-    pub mempool_min_fee: f64,
+    pub mempool_min_fee: Amount,
 }
 
 //@todo this is probably be exposed from rsd.
@@ -227,9 +227,9 @@ pub struct GetMempoolInfo {
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct MempoolEntry {
     pub size: u32,
-    pub fee: f64,
+    pub fee: Amount,
     #[serde(rename = "modifiedfee")]
-    pub modified_fee: f64,
+    pub modified_fee: Amount,
     pub time: u64,
     pub height: u32,
     //Double check if these should be floats XXX
@@ -242,19 +242,20 @@ pub struct MempoolEntry {
     #[serde(rename = "descendantsize")]
     pub descendant_size: u32,
     #[serde(rename = "descendantfees")]
-    pub descendant_fees: f64,
+    pub descendant_fees: Amount,
     #[serde(rename = "ancestorcount")]
     pub ancestor_count: u32,
     #[serde(rename = "ancestorsize")]
     pub ancestor_size: u32,
     #[serde(rename = "ancestorfees")]
-    pub ancestor_fees: f64,
+    pub ancestor_fees: Amount,
     pub depends: Vec<String>,
 }
 
 /// "estimatesmartfee"
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct EstimateSmartFee {
+    //@todo this can be a -1 so we should almost make a type of Option<Amount> where -1 = None.
     pub fee: f64,
     pub blocks: u32,
 }
@@ -373,9 +374,9 @@ pub struct NetworkInfo {
     pub connections: u32,
     pub networks: Vec<String>,
     #[serde(rename = "relayfee")]
-    pub relay_fee: f64,
+    pub relay_fee: Amount,
     #[serde(rename = "incrementalfee")]
-    pub incremental_fee: f64,
+    pub incremental_fee: Amount,
     #[serde(rename = "localaddresses")]
     pub local_addresses: Vec<LocalAddress>,
     pub warnings: String,
