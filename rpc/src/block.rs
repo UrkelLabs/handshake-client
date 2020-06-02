@@ -17,15 +17,12 @@ impl HandshakeRpcClient {
         self.call("getblockcount", &[]).await
     }
 
-    /// get_block returns the block in Hex format.
-    //@todo this should probably be a different type. Hash maybe.
     pub async fn get_block<T: ToString>(&self, blockhash: T) -> Result<String> {
         let params = vec![json!(blockhash.to_string()), json!(false), json!(false)];
 
         self.call("getblock", &params).await
     }
 
-    //@todo this should probably be a different type. Hash?
     pub async fn get_blocks<T: ToString>(&self, blockhashes: &[T]) -> Result<Vec<String>> {
         let mut params_set = Vec::new();
         for hash in blockhashes {
@@ -80,16 +77,52 @@ impl HandshakeRpcClient {
         self.call("getblockbyheight", &params).await
     }
 
+    //Batch
+    pub async fn get_blocks_by_height(&self, blockheights: Vec<u32>) -> Result<Vec<String>> {
+        let mut params_set = Vec::new();
+        for height in blockheights {
+            params_set.push(vec![json!(height), json!(false), json!(false)]);
+        }
+
+        self.batch("getblockbyheight", &params_set).await
+    }
+
     pub async fn get_block_by_height_verbose(&self, blockheight: u32) -> Result<GetBlock> {
         let params = vec![json!(blockheight), json!(true), json!(false)];
 
         self.call("getblockbyheight", &params).await
     }
 
+    //Batch
+    pub async fn get_blocks_by_height_verbose(
+        &self,
+        blockheights: Vec<u32>,
+    ) -> Result<Vec<GetBlock>> {
+        let mut params_set = Vec::new();
+        for height in blockheights {
+            params_set.push(vec![json!(height), json!(true), json!(false)]);
+        }
+
+        self.batch("getblockbyheight", &params_set).await
+    }
+
     pub async fn get_block_by_height_detailed(&self, blockheight: u32) -> Result<GetBlockDetailed> {
         let params = vec![json!(blockheight), json!(true), json!(true)];
 
         self.call("getblockbyheight", &params).await
+    }
+
+    //Batch
+    pub async fn get_blocks_by_height_detailed(
+        &self,
+        blockheights: Vec<u32>,
+    ) -> Result<Vec<GetBlockDetailed>> {
+        let mut params_set = Vec::new();
+        for height in blockheights {
+            params_set.push(vec![json!(height), json!(true), json!(true)]);
+        }
+
+        self.batch("getblockbyheight", &params_set).await
     }
 
     pub async fn get_block_hash(&self, height: u32) -> Result<Hash> {
@@ -102,6 +135,7 @@ impl HandshakeRpcClient {
         let params = vec![json!(blockhash), json!(false)];
         self.call("getblockheader", &params).await
     }
+
     pub async fn get_block_header_verbose(&self, blockhash: &str) -> Result<GetBlockHeader> {
         let params = vec![json!(blockhash), json!(true)];
         self.call("getblockheader", &params).await
