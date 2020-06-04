@@ -1,7 +1,7 @@
 // use extended_primitives::{Buffer, Hash, Uint256};
 use extended_primitives::{Buffer, Hash};
 use handshake_primitives::{Address, Covenant};
-use handshake_types::{Amount, Compact};
+use handshake_types::{amount, Amount, Compact};
 use serde_derive::{Deserialize, Serialize};
 
 /// "getinfo" command
@@ -12,6 +12,7 @@ pub struct GetInfo {
     pub protocol_version: u32,
     #[serde(rename = "walletversion")]
     pub wallet_version: u32,
+    #[serde(with = "amount::as_doos")]
     pub balance: Amount,
     pub blocks: u64,
     pub timeoffset: i64,
@@ -25,8 +26,10 @@ pub struct GetInfo {
     pub key_pool_size: u32,
     pub unlocked_until: u32,
     #[serde(rename = "paytxfee")]
+    #[serde(with = "amount::as_doos")]
     pub pay_tx_fee: Amount,
     #[serde(rename = "relayfee")]
+    #[serde(with = "amount::as_doos")]
     pub relay_fee: Amount,
     pub errors: String,
 }
@@ -162,6 +165,7 @@ pub struct VirtualInput {
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct VirtualOutput {
+    #[serde(with = "amount::as_hns")]
     pub value: Amount,
     pub n: usize,
     pub address: Address,
@@ -219,6 +223,7 @@ pub struct GetMempoolInfo {
     pub usage: u64,
     pub maxmempool: u64,
     #[serde(rename = "mempoolminfee")]
+    #[serde(with = "amount::as_doos")]
     pub mempool_min_fee: Amount,
 }
 
@@ -227,8 +232,10 @@ pub struct GetMempoolInfo {
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct MempoolEntry {
     pub size: u32,
+    #[serde(with = "amount::as_doos")]
     pub fee: Amount,
     #[serde(rename = "modifiedfee")]
+    #[serde(with = "amount::as_doos")]
     pub modified_fee: Amount,
     pub time: u64,
     pub height: u32,
@@ -242,12 +249,14 @@ pub struct MempoolEntry {
     #[serde(rename = "descendantsize")]
     pub descendant_size: u32,
     #[serde(rename = "descendantfees")]
+    #[serde(with = "amount::as_doos")]
     pub descendant_fees: Amount,
     #[serde(rename = "ancestorcount")]
     pub ancestor_count: u32,
     #[serde(rename = "ancestorsize")]
     pub ancestor_size: u32,
     #[serde(rename = "ancestorfees")]
+    #[serde(with = "amount::as_doos")]
     pub ancestor_fees: Amount,
     pub depends: Vec<String>,
 }
@@ -374,8 +383,10 @@ pub struct NetworkInfo {
     pub connections: u32,
     pub networks: Vec<String>,
     #[serde(rename = "relayfee")]
+    #[serde(with = "amount::as_doos")]
     pub relay_fee: Amount,
     #[serde(rename = "incrementalfee")]
+    #[serde(with = "amount::as_doos")]
     pub incremental_fee: Amount,
     #[serde(rename = "localaddresses")]
     pub local_addresses: Vec<LocalAddress>,
@@ -443,3 +454,46 @@ pub struct GetMemoryInfo {
     pub native_heap: u32,
     pub external: u32,
 }
+
+// fn as_doos<'de, D>(deserializer: D) -> Result<T, D::Error>
+// where
+//     D: Deserializer<'de>,
+// {
+//     // This is a Visitor that forwards string types to T's `FromStr` impl and
+//     // forwards map types to T's `Deserialize` impl. The `PhantomData` is to
+//     // keep the compiler from complaining about T being an unused generic type
+//     // parameter. We need T in order to know the Value type for the Visitor
+//     // impl.
+//     struct StringOrStruct<T>(PhantomData<fn() -> T>);
+
+//     impl<'de, T> Visitor<'de> for StringOrStruct<T>
+//     where
+//         T: Deserialize<'de> + FromStr<Err = Void>,
+//     {
+//         type Value = T;
+
+//         fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+//             formatter.write_str("string or map")
+//         }
+
+//         fn visit_str<E>(self, value: &str) -> Result<T, E>
+//         where
+//             E: de::Error,
+//         {
+//             Ok(FromStr::from_str(value).unwrap())
+//         }
+
+//         fn visit_map<M>(self, map: M) -> Result<T, M::Error>
+//         where
+//             M: MapAccess<'de>,
+//         {
+//             // `MapAccessDeserializer` is a wrapper that turns a `MapAccess`
+//             // into a `Deserializer`, allowing it to be used as the input to T's
+//             // `Deserialize` implementation. T then deserializes itself using
+//             // the entries from the map visitor.
+//             Deserialize::deserialize(de::value::MapAccessDeserializer::new(map))
+//         }
+//     }
+
+//     deserializer.deserialize_any(StringOrStruct(PhantomData))
+// }
