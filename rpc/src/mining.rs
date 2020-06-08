@@ -6,7 +6,7 @@ use serde_json::json;
 
 impl HandshakeRpcClient {
     /// Get network hash per second
-    pub async fn get_network_hashps(&self, blocks: u32, height: u32) -> Result<f32> {
+    pub async fn get_network_hashps(&self, blocks: u32, height: Option<u32>) -> Result<f64> {
         let params = vec![json!(blocks), json!(height)];
         self.call("getnetworkhashps", &params).await
     }
