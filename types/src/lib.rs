@@ -223,7 +223,7 @@ pub struct GetMempoolInfo {
     pub usage: u64,
     pub maxmempool: u64,
     #[serde(rename = "mempoolminfee")]
-    #[serde(with = "amount::as_doos")]
+    #[serde(with = "amount::as_hns")]
     pub mempool_min_fee: Amount,
 }
 
