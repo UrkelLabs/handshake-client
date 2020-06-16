@@ -383,10 +383,10 @@ pub struct NetworkInfo {
     pub connections: u32,
     pub networks: Vec<String>,
     #[serde(rename = "relayfee")]
-    #[serde(with = "amount::as_doos")]
+    #[serde(with = "amount::as_hns")]
     pub relay_fee: Amount,
     #[serde(rename = "incrementalfee")]
-    #[serde(with = "amount::as_doos")]
+    #[serde(with = "amount::as_hns")]
     pub incremental_fee: Amount,
     #[serde(rename = "localaddresses")]
     pub local_addresses: Vec<LocalAddress>,
