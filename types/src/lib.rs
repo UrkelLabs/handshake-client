@@ -511,7 +511,7 @@ pub struct Name {
     pub registered: bool,
     pub expired: bool,
     pub weak: bool,
-    pub stats: NameStats,
+    pub stats: Option<NameStats>,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -521,12 +521,68 @@ pub struct NameOwner {
 }
 
 //TODO make this an Enum for all posibilities
+// #[derive(Debug, Clone, Deserialize, Serialize)]
+// #[serde(rename_all = "camelCase")]
+// pub struct NameStats {
+//     renewal_period_start: u32,
+//     renewal_period_end: u32,
+//     blocks_until_expire: u32,
+//     days_until_expire: f64,
+// }
+
 #[derive(Debug, Clone, Deserialize, Serialize)]
-pub struct NameStats {
-    renewal_period_start: u32,
-    renewal_period_end: u32,
-    blocks_until_expire: u32,
-    days_until_expire: f64,
+#[serde(untagged)]
+pub enum NameStats {
+    Open(OpeningStats),
+    Locked(LockedStats),
+    Bid(BiddingStats),
+    Reveal(RevealStats),
+    Revoke(RevokedStats),
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct OpeningStats {
+    open_period_start: u32,
+    open_period_end: u32,
+    blocks_until_bidding: u32,
+    hours_until_bidding: f64,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LockedStats {
+    lockup_period_start: u32,
+    lockup_period_end: u32,
+    blocks_until_closed: u32,
+    hours_until_closed: f64,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BiddingStats {
+    bid_period_start: u32,
+    bid_period_end: u32,
+    blocks_until_reveal: u32,
+    hours_until_reveal: f64,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RevealStats {
+    reveal_period_start: u32,
+    reveal_period_end: u32,
+    blocks_until_close: u32,
+    hours_until_close: f64,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RevokedStats {
+    revoke_period_start: u32,
+    revoke_period_end: u32,
+    blocks_until_reopen: u32,
+    hours_until_reopen: f64,
 }
 
 //TODO check output types
