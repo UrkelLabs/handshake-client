@@ -506,7 +506,10 @@ pub struct Name {
     pub data: String,
     pub transfer: u32,
     pub revoked: u32,
-    pub claimed: bool,
+    pub claimed: u32,
+    pub renewals: u32,
+    pub registered: bool,
+    pub expired: bool,
     pub weak: bool,
     pub stats: NameStats,
 }
