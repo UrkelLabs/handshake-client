@@ -1,55 +1,51 @@
 use crate::client::HandshakeRpcClient;
-use crate::responses;
 use crate::Result;
+use handshake_client_types::{CreateClaim, Name, NameInfo, NameProof, NameResource};
 use serde_json::json;
 
 impl HandshakeRpcClient {
     //TODO check that the endpoint only parses result{} and not the error or id.
-    pub async fn get_name_info(&self, name: &str) -> Result<responses::NameInfo> {
-        let params = vec![json!(name)];
-        self.call("getnameinfo", &params).await
+    pub async fn get_name_info(&self, name: &str) -> Result<NameInfo> {
+        self.call("getnameinfo", &[json!(name)]).await
     }
 
-    //TODO finish output with enums
-    pub async fn get_names(&self) -> Result<Vec<responses::Name>> {
+    ////TODO finish output with enums
+    pub async fn get_names(&self) -> Result<Vec<Name>> {
         self.call("getnames", &[]).await
     }
 
     pub async fn get_name_by_hash(&self, name_hash: &str) -> Result<String> {
-        let params = vec![json!(name_hash)];
-        self.call("getnamebyhash", &params).await
+        self.call("getnamebyhash", &[json!(name_hash)]).await
     }
 
-    //TODO test return value.
-    pub async fn get_name_resource(&self, name: &str) -> Result<responses::NameResource> {
-        let params = vec![json!(name)];
-        self.call("getnameresource", &params).await
+    ////TODO test return value.
+    pub async fn get_name_resource(&self, name: &str) -> Result<NameResource> {
+        self.call("getnameresource", &[json!(name)]).await
     }
 
-    pub async fn get_name_proof(&self, name: &str) -> Result<responses::NameProof> {
-        let params = vec![json!(name)];
-        self.call("getnameproof", &params).await
+    pub async fn get_name_proof(&self, name: &str) -> Result<NameProof> {
+        self.call("getnameproof", &[json!(name)]).await
     }
 
-    pub async fn create_claim(&self, name: &str) -> Result<responses::CreateClaim> {
-        let params = vec![json!(name)];
-        self.call("createclaim", &params).await
+    pub async fn create_claim(&self, name: &str) -> Result<CreateClaim> {
+        self.call("createclaim", &[json!(name)]).await
     }
 
-    //TODO check return type.
     pub async fn send_claim(&self, name: &str) -> Result<()> {
-        let params = vec![json!(name)];
-        self.call("sendclaim", &params).await
+        self.call("sendclaim", &[json!(name)]).await
     }
 
-    //TODO check the return type on this.
     pub async fn send_raw_claim(&self, claim: &str) -> Result<()> {
-        let params = vec![json!(claim)];
-        self.call("sendrawclaim", &params).await
+        self.call("sendrawclaim", &[json!(claim)]).await
     }
 
-    pub async fn grind_name(&self, length: u32) -> Result<String> {
-        let params = vec![json!(length)];
-        self.call("grindname", &params).await
+    //@todo DNSSEC request.
+
+    pub async fn send_raw_airdrop(&self, airdrop: &str) -> Result<()> {
+        self.call("sendrawairdrop", &[json!(airdrop)]).await
+    }
+
+    pub async fn grind_name(&self, length: Option<u32>) -> Result<String> {
+        self.call("grindname", &[json!(length)]).await
     }
 }

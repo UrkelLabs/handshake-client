@@ -3,6 +3,7 @@ use extended_primitives::{Buffer, Hash};
 use handshake_primitives::{Address, Covenant};
 use handshake_types::{amount, Amount, Compact};
 use serde_derive::{Deserialize, Serialize};
+use std::collections::HashMap;
 
 /// "getinfo" command
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -26,10 +27,10 @@ pub struct GetInfo {
     pub key_pool_size: u32,
     pub unlocked_until: u32,
     #[serde(rename = "paytxfee")]
-    #[serde(with = "amount::as_doos")]
+    #[serde(with = "amount::as_hns")]
     pub pay_tx_fee: Amount,
     #[serde(rename = "relayfee")]
-    #[serde(with = "amount::as_doos")]
+    #[serde(with = "amount::as_hns")]
     pub relay_fee: Amount,
     pub errors: String,
 }
@@ -232,10 +233,10 @@ pub struct GetMempoolInfo {
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct MempoolEntry {
     pub size: u32,
-    #[serde(with = "amount::as_doos")]
+    #[serde(with = "amount::as_hns")]
     pub fee: Amount,
     #[serde(rename = "modifiedfee")]
-    #[serde(with = "amount::as_doos")]
+    #[serde(with = "amount::as_hns")]
     pub modified_fee: Amount,
     pub time: u64,
     pub height: u32,
@@ -455,6 +456,90 @@ pub struct GetMemoryInfo {
     pub external: u32,
 }
 
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct CreateClaim {
+    pub name: String,
+    pub target: String,
+    #[serde(with = "amount::as_doos")]
+    pub value: Amount,
+    pub size: u64,
+    #[serde(with = "amount::as_doos")]
+    pub fee: Amount,
+    pub address: String,
+    pub txt: String,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct NameProof {
+    pub hash: String,
+    pub height: u32,
+    pub root: String,
+    pub name: String,
+    pub key: String,
+    pub proof: Proof,
+}
+
+//@todo needs to actually be an enum -> See: https://handshake-org.github.io/api-docs/#getnameproof
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct Proof {
+    #[serde(rename = "type")]
+    pub type_: String,
+    pub depth: u32,
+    pub nodes: Vec<Vec<String>>,
+    pub value: String,
+}
+
+//TODO no idea if this works -> Please test
+pub type NameResource = HashMap<String, String>;
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Name {
+    pub name: String,
+    pub name_hash: String,
+    pub state: String,
+    pub height: u32,
+    pub renewal: u32,
+    pub owner: NameOwner,
+    pub value: u64,
+    pub highest: u64,
+    pub data: String,
+    pub transfer: u32,
+    pub revoked: u32,
+    pub claimed: bool,
+    pub weak: bool,
+    pub stats: NameStats,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct NameOwner {
+    pub hash: String,
+    pub index: u64,
+}
+
+//TODO make this an Enum for all posibilities
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct NameStats {
+    renewal_period_start: u32,
+    renewal_period_end: u32,
+    blocks_until_expire: u32,
+    days_until_expire: f64,
+}
+
+//TODO check output types
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct NameInfo {
+    pub start: NameStart,
+    pub info: Name,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct NameStart {
+    pub reserved: bool,
+    pub week: u32,
+    pub start: u32,
+}
+
 // fn as_doos<'de, D>(deserializer: D) -> Result<T, D::Error>
 // where
 //     D: Deserializer<'de>,
@@ -497,3 +582,4 @@ pub struct GetMemoryInfo {
 
 //     deserializer.deserialize_any(StringOrStruct(PhantomData))
 // }
+//

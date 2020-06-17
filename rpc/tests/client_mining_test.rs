@@ -9,7 +9,7 @@ use handshake_primitives::block_template::builder::BlockTemplateBuilder;
 async fn test_get_network_hashps() {
     let client = setup();
 
-    let networkhashps = client.get_network_hashps(120, 1).await;
+    let networkhashps = client.get_network_hashps(120, Some(1)).await;
 
     assert!(networkhashps.is_ok());
 }

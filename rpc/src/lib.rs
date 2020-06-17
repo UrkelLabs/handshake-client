@@ -2,7 +2,7 @@ mod block;
 mod chain;
 mod mempool;
 mod mining;
-// mod names;
+mod names;
 mod network;
 mod node;
 // mod tx;
