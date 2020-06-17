@@ -538,6 +538,7 @@ pub enum NameStats {
     Bid(BiddingStats),
     Reveal(RevealStats),
     Revoke(RevokedStats),
+    Closed(ClosedStats),
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -583,6 +584,15 @@ pub struct RevokedStats {
     revoke_period_end: u32,
     blocks_until_reopen: u32,
     hours_until_reopen: f64,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ClosedStats {
+    renewal_period_start: u32,
+    renewal_period_end: u32,
+    blocks_until_expire: u32,
+    days_until_expire: f64,
 }
 
 //TODO check output types
