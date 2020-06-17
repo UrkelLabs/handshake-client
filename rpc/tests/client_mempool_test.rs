@@ -76,8 +76,6 @@ async fn test_get_raw_mempool_verbose() {
 
     let mempool = client.get_raw_mempool_verbose().await;
 
-    dbg
-
     assert!(mempool.is_ok());
 }
 
