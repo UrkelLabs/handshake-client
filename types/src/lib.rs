@@ -507,7 +507,7 @@ pub struct Name {
     pub transfer: u32,
     pub revoked: u32,
     pub claimed: bool,
-    pub weak: bool,
+    pub weak: u32,
     pub stats: NameStats,
 }
 
