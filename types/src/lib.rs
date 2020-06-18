@@ -599,7 +599,7 @@ pub struct ClosedStats {
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct NameInfo {
     pub start: NameStart,
-    pub info: Name,
+    pub info: Option<Name>,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
