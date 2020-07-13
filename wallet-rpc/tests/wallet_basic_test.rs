@@ -16,3 +16,14 @@ async fn test_get_balance() {
 
     // assert!(info.is_ok());
 }
+
+#[async_std::test]
+async fn test_history() {
+    let client = setup();
+
+    client.select_wallet("pool").await;
+
+    let history = client.history(None, None, None, None).await;
+
+    dbg!(history);
+}

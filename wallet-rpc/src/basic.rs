@@ -1,5 +1,6 @@
 use crate::client::HandshakeWalletRpcClient;
 use crate::Result;
+use handshake_client_types::WalletTransaction;
 use serde_json::json;
 
 impl HandshakeWalletRpcClient {
@@ -24,5 +25,20 @@ impl HandshakeWalletRpcClient {
     pub async fn send_to_address(&self, address: String, amount: f64) -> Result<String> {
         self.call("sendtoaddress", &[json!(address), json!(amount)])
             .await
+    }
+
+    //@todo result of transactions.
+    pub async fn history(
+        &self,
+        account: Option<String>,
+        count: Option<u32>,
+        from: Option<u32>,
+        watch_only: Option<bool>,
+    ) -> Result<Vec<WalletTransaction>> {
+        self.call(
+            "listtransactions",
+            &[json!(account), json!(count), json!(from), json!(watch_only)],
+        )
+        .await
     }
 }
