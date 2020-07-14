@@ -3,6 +3,8 @@
 
 use rpc_json_client;
 use serde_json;
+use std::error::Error as StdError;
+use std::fmt;
 
 #[derive(Debug)]
 pub enum Error {
@@ -22,12 +24,20 @@ impl From<serde_json::error::Error> for Error {
     }
 }
 
-//TODO
-// impl fmt::Display for Error {
-//     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-//         match *self {
-//             Error::JsonRpc(ref e) => write!(f, "JSON-RPC error: {}", e),
-//             Error::Json(ref e) => write!(f, "JSON error: {}", e),
-//         }
-//     }
-// }
+impl StdError for Error {
+    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+        match *self {
+            Error::JsonRpc(ref e) => Some(e),
+            Error::Json(ref e) => Some(e),
+        }
+    }
+}
+
+impl fmt::Display for Error {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            Error::JsonRpc(ref e) => write!(f, "JSON-RPC error: {}", e),
+            Error::Json(ref e) => write!(f, "JSON error: {}", e),
+        }
+    }
+}
