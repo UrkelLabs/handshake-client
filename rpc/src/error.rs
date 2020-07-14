@@ -30,3 +30,12 @@ impl fmt::Display for Error {
         }
     }
 }
+
+impl std::error::Error for Error {
+    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+        match *self {
+            Error::JsonRpc(ref e) => Some(e),
+            Error::Json(ref e) => Some(e),
+        }
+    }
+}
