@@ -616,8 +616,7 @@ pub struct WalletTransaction {
     pub address: String,
     //@todo probs make this an enum
     pub category: String,
-    #[serde(with = "amount::as_hns")]
-    pub amount: Amount,
+    pub amount: i64,
     pub label: String,
     pub vout: u32,
     pub confirmations: i32,
