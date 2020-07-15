@@ -613,14 +613,14 @@ pub struct NameStart {
 pub struct WalletTransaction {
     pub account: String,
     //Until address supports deserialize string this won't work
-    pub address: String,
+    pub address: Option<String>,
     //@todo probs make this an enum
     pub category: String,
     pub amount: i64,
-    pub label: String,
+    pub label: Option<String>,
     pub vout: u32,
     pub confirmations: i32,
-    pub blockhash: Hash,
+    pub blockhash: Option<Hash>,
     pub blockindex: i32,
     pub blocktime: u64,
     pub blockheight: u32,
