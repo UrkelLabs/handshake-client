@@ -616,7 +616,7 @@ pub struct WalletTransaction {
     pub address: Option<String>,
     //@todo probs make this an enum
     pub category: String,
-    pub amount: i64,
+    pub amount: f64,
     pub label: Option<String>,
     pub vout: u32,
     pub confirmations: i32,
