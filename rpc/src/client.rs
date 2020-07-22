@@ -17,6 +17,16 @@ impl HandshakeRpcClient {
         }
     }
 
+    pub fn new_with_backups(uri: &str, backups: Vec<String>) -> Self {
+        let client = ClientBuilder::new(uri)
+            .with_retry()
+            .with_backups(backups)
+            .build();
+        HandshakeRpcClient {
+            client: Arc::new(client),
+        }
+    }
+
     //TODO can we change params to be an Into<Value>? Then we can remove all those serde json
     //macros in all the requests.
     pub(crate) async fn call<T>(&self, method: &str, params: &[serde_json::Value]) -> Result<T>
