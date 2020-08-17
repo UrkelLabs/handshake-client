@@ -7,7 +7,7 @@ edition = "2018"
 [dependencies]
 
 # Known External
-extended-primitives = { git="https://github.com/UrkelLabs/extended-primitives", features=["serialization"]}
+extended-primitives = { version="0.3.4", features=["serialization"]}
 handshake-primitives = { git="https://github.com/UrkelLabs/rsd", features=["json"]}
 handshake-types = { git="https://github.com/UrkelLabs/rsd", features=["json"]}
 
